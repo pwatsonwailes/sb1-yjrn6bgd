@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from './components/Card';
 import { ResourceBar } from './components/ResourceBar';
 import { EventLog } from './components/EventLog';
 import { FactionPanel } from './components/FactionPanel';
+import { DeckManager } from './components/deck/DeckManager';
 import { useGameState } from './hooks/useGameState';
 import { Card as CardType } from './types/cards';
+import { allCards } from './data/cards';
 
 export function App() {
   const {
@@ -14,8 +16,11 @@ export function App() {
     events,
     factions,
     selectCard,
-    endTurn
+    endTurn,
+    updateDeck
   } = useGameState();
+
+  const [showDeckManager, setShowDeckManager] = useState(false);
 
   const handleCardClick = (card: CardType) => {
     selectCard(card);
@@ -35,49 +40,66 @@ export function App() {
 
         <FactionPanel factions={factions} />
 
-        <div className="bg-gray-800 rounded-lg p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl text-white">Turn {gameState.turn}</h2>
-            {gameState.debtPaymentDue > 0 && (
-              <div className="text-red-400">
-                Debt Payment Due in {gameState.debtPaymentDue} turns
-              </div>
-            )}
-          </div>
-          
-          <div className="flex justify-center mb-4">
-            <button
-              onClick={endTurn}
-              disabled={selectedCards.size === 0}
-              className={`
-                px-4 py-2 rounded-lg transition-colors
-                ${selectedCards.size === 0
-                  ? 'bg-gray-600 cursor-not-allowed'
-                  : 'bg-indigo-600 hover:bg-indigo-700'
-                }
-                text-white
-              `}
-            >
-              End Turn
-            </button>
-          </div>
-
-          <div className="flex flex-wrap gap-4 justify-center">
-            {gameState.hand.map(card => (
-              <Card
-                key={card.id}
-                card={card}
-                onClick={() => handleCardClick(card)}
-                disabled={
-                  gameState.energyPoints < card.cost.energy ||
-                  (card.cost.credits && gameState.credits < card.cost.credits)
-                }
-                selected={selectedCards.has(card.id)}
-                playing={playingCards.has(card.id)}
-              />
-            ))}
-          </div>
+        <div className="flex justify-end">
+          <button
+            onClick={() => setShowDeckManager(!showDeckManager)}
+            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg"
+          >
+            {showDeckManager ? 'Close Deck Manager' : 'Open Deck Manager'}
+          </button>
         </div>
+
+        {showDeckManager ? (
+          <DeckManager
+            deck={gameState.deck}
+            allCards={allCards}
+            onUpdateDeck={updateDeck}
+          />
+        ) : (
+          <div className="bg-gray-800 rounded-lg p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl text-white">Turn {gameState.turn}</h2>
+              {gameState.debtPaymentDue > 0 && (
+                <div className="text-red-400">
+                  Debt Payment Due in {gameState.debtPaymentDue} turns
+                </div>
+              )}
+            </div>
+            
+            <div className="flex justify-center mb-4">
+              <button
+                onClick={endTurn}
+                disabled={selectedCards.size === 0}
+                className={`
+                  px-4 py-2 rounded-lg transition-colors
+                  ${selectedCards.size === 0
+                    ? 'bg-gray-600 cursor-not-allowed'
+                    : 'bg-indigo-600 hover:bg-indigo-700'
+                  }
+                  text-white
+                `}
+              >
+                End Turn
+              </button>
+            </div>
+
+            <div className="flex flex-wrap gap-4 justify-center">
+              {gameState.hand.map(card => (
+                <Card
+                  key={card.id}
+                  card={card}
+                  onClick={() => handleCardClick(card)}
+                  disabled={
+                    gameState.energyPoints < card.cost.energy ||
+                    (card.cost.credits && gameState.credits < card.cost.credits)
+                  }
+                  selected={selectedCards.has(card.id)}
+                  playing={playingCards.has(card.id)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       
       <EventLog events={events} />

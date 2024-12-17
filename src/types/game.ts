@@ -1,9 +1,6 @@
-export interface Corporation {
-  id: string;
-  name: string;
-  description: string;
-  reputation: number;
-}
+import { Corporation } from './factions';
+import { Card } from './cards';
+import { MarketState } from '../engine/market/types';
 
 export interface GameState {
   credits: number;
@@ -31,3 +28,5 @@ export interface MarketState {
 
 // Re-export existing types
 export * from './cards';
+export * from './factions';
+export * from './events';

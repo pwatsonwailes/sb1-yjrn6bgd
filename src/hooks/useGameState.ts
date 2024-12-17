@@ -104,6 +104,18 @@ export const useGameState = () => {
     }
   }, [factions, updateFactionReputation, addEvent]);
 
+  const updateDeck = useCallback((newDeck: Card[]) => {
+    setGameState(current => ({
+      ...current,
+      deck: newDeck
+    }));
+
+    addEvent({
+      message: 'Deck updated',
+      type: 'info'
+    });
+  }, [addEvent]);
+
   return {
     gameState,
     selectedCards,
@@ -113,6 +125,7 @@ export const useGameState = () => {
     drawCards,
     selectCard,
     endTurn,
-    updateFactionReputation
+    updateFactionReputation,
+    updateDeck
   };
 };
