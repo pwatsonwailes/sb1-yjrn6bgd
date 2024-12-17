@@ -4,6 +4,10 @@ import { maintenanceCards } from './maintenance';
 import { tradeCards } from './trade';
 import { debtCards } from './debt';
 import { modCards } from './mods';
+import { megacorpCards } from './factions/megacorp';
+import { cybertechCards } from './factions/cybertech';
+import { quantumCards } from './factions/quantum';
+import { stellarCorpCards } from './factions/stellarcorp';
 
 export const allCards = [
   ...miningCards,
@@ -11,6 +15,10 @@ export const allCards = [
   ...tradeCards,
   ...debtCards,
   ...modCards,
+  ...megacorpCards,
+  ...cybertechCards,
+  ...quantumCards,
+  ...stellarCorpCards,
 ];
 
 export const getStarterDeck = (): Card[] => {

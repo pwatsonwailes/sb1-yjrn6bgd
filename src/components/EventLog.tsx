@@ -1,15 +1,45 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-export interface GameEvent {
-  id: string;
-  message: string;
-  type: 'success' | 'warning' | 'danger' | 'info';
-}
+import { AlertTriangle, TrendingUp, CreditCard, Shield } from 'lucide-react';
+import { GameEvent } from '../types/events';
 
 interface EventLogProps {
   events: GameEvent[];
 }
+
+const getEventIcon = (type: GameEvent['type']) => {
+  switch (type) {
+    case 'market':
+      return <TrendingUp className="w-5 h-5" />;
+    case 'debt':
+      return <CreditCard className="w-5 h-5" />;
+    case 'reputation':
+      return <Shield className="w-5 h-5" />;
+    case 'danger':
+      return <AlertTriangle className="w-5 h-5" />;
+    default:
+      return null;
+  }
+};
+
+const getEventColor = (type: GameEvent['type']) => {
+  switch (type) {
+    case 'success':
+      return 'bg-green-600';
+    case 'warning':
+      return 'bg-yellow-600';
+    case 'danger':
+      return 'bg-red-600';
+    case 'market':
+      return 'bg-blue-600';
+    case 'debt':
+      return 'bg-purple-600';
+    case 'reputation':
+      return 'bg-indigo-600';
+    default:
+      return 'bg-blue-600';
+  }
+};
 
 export const EventLog: React.FC<EventLogProps> = ({ events }) => {
   return (
@@ -18,17 +48,24 @@ export const EventLog: React.FC<EventLogProps> = ({ events }) => {
         {events.map(event => (
           <motion.div
             key={event.id}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
-            className={`p-4 rounded-lg shadow-lg ${
-              event.type === 'success' ? 'bg-green-600' :
-              event.type === 'warning' ? 'bg-yellow-600' :
-              event.type === 'danger' ? 'bg-red-600' :
-              'bg-blue-600'
-            } text-white`}
+            initial={{ opacity: 0, x: 100, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 100, scale: 0.9 }}
+            className={`
+              p-4 rounded-lg shadow-lg flex items-center gap-3
+              ${getEventColor(event.type)}
+              text-white
+            `}
           >
-            {event.message}
+            {getEventIcon(event.type)}
+            <div className="flex-1">
+              <p className="font-medium">{event.message}</p>
+              {event.details && event.type === 'market' && (
+                <p className="text-sm opacity-90">
+                  New price: {event.details.newPrice} credits
+                </p>
+              )}
+            </div>
           </motion.div>
         ))}
       </AnimatePresence>
