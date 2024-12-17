@@ -2,11 +2,20 @@ import React from 'react';
 import { Card } from './components/Card';
 import { ResourceBar } from './components/ResourceBar';
 import { EventLog } from './components/EventLog';
+import { FactionPanel } from './components/FactionPanel';
 import { useGameState } from './hooks/useGameState';
 import { Card as CardType } from './types/cards';
 
 export function App() {
-  const { gameState, selectedCards, playingCards, events, selectCard, endTurn } = useGameState();
+  const {
+    gameState,
+    selectedCards,
+    playingCards,
+    events,
+    factions,
+    selectCard,
+    endTurn
+  } = useGameState();
 
   const handleCardClick = (card: CardType) => {
     selectCard(card);
@@ -23,6 +32,8 @@ export function App() {
           energyPoints={gameState.energyPoints}
           debt={gameState.debt}
         />
+
+        <FactionPanel factions={factions} />
 
         <div className="bg-gray-800 rounded-lg p-4">
           <div className="flex justify-between items-center mb-4">
@@ -73,5 +84,3 @@ export function App() {
     </div>
   );
 }
-
-export default App;
