@@ -26,7 +26,6 @@ export const useStory = (chapters: StoryChapter[]) => {
   }, [chapters, storyState.currentChapter, storyState.choices]);
 
   const handleChoice = useCallback((choiceId: string, picked: number) => {
-    console.log('Choice made:', { choiceId, picked }); // Debug log
     setStoryState(prev => ({
       ...prev,
       choices: {

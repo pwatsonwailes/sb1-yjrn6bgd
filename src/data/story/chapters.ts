@@ -36,7 +36,7 @@ export const storyChapters: StoryChapter[] = [
 						},
 						{
 							src: "black",
-							"caption": "Image 4",
+							"caption": "",
 							"displayDuration": 1600,
 							"transitionDuration": 500
 						}
@@ -73,9 +73,9 @@ export const storyChapters: StoryChapter[] = [
 				id: "talkSleepStand",
 				text: "You blink a few times and try jogging your memory again. Nothing comes. You see a man in front of you, sat in an old, battered chair. He’s reading something. Workers clothes. Designed for someone with a hard life, and a hard job. Your head is pounding. You look around at the room. It’s quiet in here. There’s a gentle hum in the background.",
 				options: [
-					{ picked: 1, text: "Try and sleep" },
-					{ picked: 2, text: "Talk to the man" },
-					{ picked: 3, text: "Try and stand" }
+					{ text: "Try and sleep" },
+					{ text: "Talk to the man" },
+					{ text: "Try and stand" }
 				],
 				media: {
 					character: {
@@ -88,17 +88,17 @@ export const storyChapters: StoryChapter[] = [
 			{
 				type: "paragraph",
 				text: "You try and close your eyes and go back to sleep, but your head swims as you do. It’s worse than having your eyes open. Whatever happened, it hurts. You shake your head, which the man sees from the corner of his eye.",
-				requirements: [{ type: "choice", choiceID: "talkSleepStand", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "talkSleepStand", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "You try to speak, but your tongue is leaden in your mouth. What comes out is a muffled garble of half-words. Whatever happened, it’s not good. You shake your head, which the man sees from the corner of his eye.",
-				requirements: [{ type: "choice", choiceID: "talkSleepStand", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "talkSleepStand", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "You try and stand up, but everything hurts. You don’t keep trying, but instead go back to letting yourself float a little, the meagre gravity of the drive acceleration pulling you back down. You gently shake your head to try and clear the fog, which the man sees from the corner of his eye.",
-				requirements: [{ type: "choice", choiceID: "talkSleepStand", optionID: 3 }]
+				requirements: [{ type: "choice", choiceId: "talkSleepStand", optionId: 3 }]
 			},
 			{
 				type: "paragraph",
@@ -121,25 +121,25 @@ export const storyChapters: StoryChapter[] = [
 				id: "employer",
 				text: "He casts a critical eye over you. “We need to get you to the med bay at Ceres. Maybe they can jolt your memories back. We’ll be there in a few hours. We found a corporate registration on you. It said you work for… Who was it again? Give me a second. I can’t remember if it was the astro-mining company Delomir, the chemicals company Metagene, or that private security company… ParaSecurity.” He checks his pockets for your ident chip and finds it a moment later. He pulls out the small credit-card sized tablet. “Ah yes, it was…”",
 				options: [
-					{ picked: 1, text: "Delomir Industries" },
-					{ picked: 2, text: "Metagene Incorporated" },
-					{ picked: 3, text: "ParaSecurity Limited" }
+					{ text: "Delomir Industries" },
+					{ text: "Metagene Incorporated" },
+					{ text: "ParaSecurity Limited" }
 				]
 			},
 			{
 				type: "paragraph",
 				text: "“Delomir Industries. They’ll have a private hospital for their workers. We’ll take you there, and I’m sure they’ll look after you.” You roll the name around your mind. Delomir Industries. It doesn’t trigger anything. “Anyway,” he continues, “we’ll be there in about two days.” Abdullahi gestures towards the door. “Come on. You should meet the rest of the crew. And get something to eat. It might help with the dizziness.”",
-				requirements: [{ type: "choice", choiceID: "employer", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "employer", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "“Metagene Incorporated. They’ll have a private hospital for their workers. We’ll take you there, and I’m sure they’ll look after you.” You roll the name around your mind. Metagene Incorporated. It doesn’t trigger anything. “Anyway,” he continues, “we’ll be there in about two days.” Abdullahi gestures towards the door. “Come on. You should meet the rest of the crew. And get something to eat. It might help with the dizziness.”",
-				requirements: [{ type: "choice", choiceID: "employer", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "employer", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "“ParaSecurity Limited. They’ll have a private hospital for their workers. We’ll take you there, and I’m sure they’ll look after you.” You roll the name around your mind. ParaSecurity Limited. It doesn’t trigger anything. “Anyway,” he continues, “we’ll be there in about two days.” Abdullahi gestures towards the door. “Come on. You should meet the rest of the crew. And get something to eat. It might help with the dizziness.”",
-				requirements: [{ type: "choice", choiceID: "employer", optionID: 3 }]
+				requirements: [{ type: "choice", choiceId: "employer", optionId: 3 }]
 			},
 			{
 				type: "paragraph",
@@ -166,29 +166,29 @@ export const storyChapters: StoryChapter[] = [
 				id: "foodOrLearn",
 				text: "At the end of the table, a lanky young man with an infectious grin waves. “Leo, navigator and resident clown so I’m told. Don’t worry, we’ll get you sorted out.”",
 				options: [
-					{ picked: 1, text: "Ask for food." },
-					{ picked: 2, text: "Ask to learn more about the cew." },
+					{ text: "Ask for food." },
+					{ text: "Ask to learn more about the cew." },
 				]
 			},
 			{
 				type: "paragraph",
 				text: "“Is there any chance I could get something to eat?”",
-				requirements: [{ type: "choice", choiceID: "foodOrLearn", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "foodOrLearn", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "A bowl of rehydrated stew is placed in front of you as you sit down, and though you’re not particularly hungry, you take a tentative bite. The warmth of the food helps ground you, offering a small comfort in the midst of your confusion. As you eat, you listen to the crew’s conversation, trying to piece together the reality you’ve been thrust into. They talk about the mining operations on Ceres, ongoing tensions with rival factions, and the ever-present danger of piracy. It’s a harsh, unforgiving world, but there’s a camaraderie among the crew that tempers the bleakness.",
-				requirements: [{ type: "choice", choiceID: "foodOrLearn", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "foodOrLearn", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "“So, how did you all end up on this ship?”",
-				requirements: [{ type: "choice", choiceID: "foodOrLearn", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "foodOrLearn", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "The crew take turns answering, and you unwind listening to their responses, trying to piece together the reality you’ve been thrust into. They talk about meeting each other in different mining operations on Ceres, the ongoing tensions and histories with rival factions, and the ever-present danger of piracy. It’s a harsh, unforgiving world, but there’s a camaraderie among the crew that tempers the bleakness.",
-				requirements: [{ type: "choice", choiceID: "foodOrLearn", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "foodOrLearn", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
@@ -199,29 +199,29 @@ export const storyChapters: StoryChapter[] = [
 				id: "askOrThank",
 				text: "You feel tired, but don’t want to appear ungrateful.",
 				options: [
-					{ picked: 1, text: "Ask if you can help." },
-					{ picked: 2, text: "Thank Abdullahi and follow him." },
+					{ text: "Ask if you can help." },
+					{ text: "Thank Abdullahi and follow him." },
 				]
 			},
 			{
 				type: "paragraph",
 				text: "“Is there anything I can do to help around here until we reach Ceres?”",
-				requirements: [{ type: "choice", choiceID: "askOrThank", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "askOrThank", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "Abdullahi raises an eyebrow, then nods. “There’s always something to do. We’ll find you something to keep you busy.”",
-				requirements: [{ type: "choice", choiceID: "askOrThank", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "askOrThank", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "“Thanks, Abdullahi. I appreciate everything.”",
-				requirements: [{ type: "choice", choiceID: "askOrThank", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "askOrThank", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "The crew’s chatter provides a soothing background as you try to shepherd your fragmented thoughts. Rest sounds good. You feel at sea, not knowing who you are, but for now, you’re among people who seem willing to help.",
-				requirements: [{ type: "choice", choiceID: "askOrThank", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "askOrThank", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
@@ -232,29 +232,29 @@ export const storyChapters: StoryChapter[] = [
 				id: "capabilitiesOrMissions",
 				text: "As you walk, Abdullahi points out various sections of the ship—the cargo hold, the engine room, and the small but functional medical bay. It’s a small ship, clearly built for utility rather than comfort. A workhorse, designed to endure harsh conditions, everything stripped back to the essentials for its work.",
 				options: [
-					{ picked: 1, text: "Ask about the ship’s capabilities." },
-					{ picked: 2, text: "Inquire about the ship’s recent missions." },
+					{ text: "Ask about the ship’s capabilities." },
+					{ text: "Inquire about the ship’s recent missions." },
 				]
 			},
 			{
 				type: "paragraph",
 				text: "“What kind of capabilities does the Prospector have?”",
-				requirements: [{ type: "choice", choiceID: "capabilitiesOrMissions", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "capabilitiesOrMissions", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "Abdullahi smiles slightly. “She’s not the fastest ship out there, but she’s sturdy. Good cargo space, reliable engines, and a decent array of tools for mining operations. She gets the job done. Good thing too…” His eyes glaze over for a moment, his mind elsewhere. “Something is changing out here. There’s something coming.”",
-				requirements: [{ type: "choice", choiceID: "capabilitiesOrMissions", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "capabilitiesOrMissions", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "“What kind of missions has the Prospector been on recently?”",
-				requirements: [{ type: "choice", choiceID: "capabilitiesOrMissions", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "capabilitiesOrMissions", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "Abdullahi’s expression turns serious. “We’ve been running a lot of supply missions between the Belt and the inner planets. Mostly routine, but things have been getting tense out here. There’s something coming.”",
-				requirements: [{ type: "choice", choiceID: "capabilitiesOrMissions", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "capabilitiesOrMissions", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
@@ -273,34 +273,34 @@ export const storyChapters: StoryChapter[] = [
 				id: "shareOrDeflect",
 				text: "Several hours later, you wake and find that most of the rest of the crew have gone to bed. Day and night doesn’t mean much around here, and somehow you know that there always needs to be someone awake. You make your way through the ship and find yourself back in the mess hall, where Miles is lounging with a mug of coffee. He looks up as you enter and waves you over. “Hey. How’s our guest holding up?”",
 				options: [
-					{ picked: 1, text: "Share your thoughts with Miles." },
-					{ picked: 2, text: "Ask Miles about himself." },
+					{ text: "Share your thoughts with Miles." },
+					{ text: "Ask Miles about himself." },
 				]
 			},
 			{
 				type: "paragraph",
 				text: "“I’m… unsettled. It’s a mix of scared and curious. I need to know who I am, but what if I don’t like what I find? Is this a chance for a new start I should be grateful for and not ask too many questions about? Or should I dig and see what’s out there?”",
-				requirements: [{ type: "choice", choiceID: "shareOrDeflect", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "shareOrDeflect", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "Miles nods sympathetically. “I can’t imagine what you’re going through. But you’re safe here. We’ll help you figure things out.”",
-				requirements: [{ type: "choice", choiceID: "shareOrDeflect", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "shareOrDeflect", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "“I’m holding up. So, how did you end up as a pilot on the Prospector?”",
-				requirements: [{ type: "choice", choiceID: "shareOrDeflect", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "shareOrDeflect", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "Miles grins. “Long story, but the short version I’ve always had a knack for flying, and the Captain gave me a chance when I needed it. I owe him.”",
-				requirements: [{ type: "choice", choiceID: "shareOrDeflect", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "shareOrDeflect", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "As you talk with Miles, you start to feel a bit more at ease. His camaraderie is infectious, and despite the uncertainty of your situation, you feel a sense of belonging.",
-				requirements: [{ type: "choice", choiceID: "shareOrDeflect", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "shareOrDeflect", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
@@ -396,14 +396,14 @@ export const storyChapters: StoryChapter[] = [
 				id: "stayOrAlone",
 				text: "You move your gaze back to the faces around you; once strange but now familiar comfort in this place. The pod comes to a halt, and Abdullahi and Zoe lead the way as the crew disembarks. Each person begins going about their tasks with practiced efficiency. Their sense of purpose reminds you of your lack of one. It jars you back into action. You need to learn more.",
 				options: [
-					{ picked: 1, text: "Stay with the crew." },
-					{ picked: 2, text: "Explore on your own." },
+					{ text: "Stay with the crew." },
+					{ text: "Explore on your own." },
 				]
 			},
 			{
 				type: "paragraph",
 				text: "You stick close to the crew, following Abdullahi and Zoe through the crowd to a market. The noise and activity and motion are almost overwhelming. Abdullahi leads you to a small office near the docks.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }],
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }],
 				media: {
 					"image": {
 						src: "garrett"
@@ -413,70 +413,72 @@ export const storyChapters: StoryChapter[] = [
 			{
 				type: "paragraph",
 				text: "Inside it’s chaotic yet oddly organised space, a small room that seems to burst at the seams with technology. The walls are lined with shelves, each one crammed with data pads, old-fashioned books, and various pieces of equipment. The shelves themselves are a patchwork of different materials, some metal, some wood, all bearing the marks of heavy use and hasty repair.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "In the center of the room, a large, cluttered desk dominates the space. It’s covered in a mess of data pads, holo-displays, and a few old-style paper notebooks filled with scribbled notes and sketches. A multi-screen setup sits on the desk, each screen displaying different streams of data: news from the Belt, ship movements, market prices, and a running list of recent arrivals and departures from Ceres.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "The air is filled with a low hum of electronic equipment, punctuated by the occasional beep or chirp from one of the many devices strewn about. A single, flickering fluorescent light hangs from the ceiling, casting a harsh, uneven glow over the room.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "A figure sits on a chair facing the far wall of the room. “Ah it is you,” he says, without turning around. “What is it you are wanting today Captain Abdullahi”.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "Abdullahi nods in your direction. “This one was found on the drift. We want to find out where they belong. We have the corporate ID, but nothing personal. I was thinking you might know something.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "Garrett nods, tapping a few keys on his console. “I’ll run a search through the newer arrivals and missing persons. It might take a while, but I’ll let you know if I find anything.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "You nod and take a seat, watching as Garrett works. The glowing screens around the office offer a glimpse into life on Ceres, every bit as chaotic as the room you’re in. You catch fragments of stories across the asteroid as they flicker by. You wonder how Garrett can possibly absorb it all.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "After a while, he spins a screen around. “I am thinkings this is you,” he says. You look at the screen. You have an answer to who you are. You’re a security contractor. You worked solo on a small ship, the Celerity. You were reported missing a day ago, when you missed your scheduled check in with the company.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "“Although it is saying you were working under a private contract on behalf of your employer. I am feeling sorry to be telling you but they are not now employing you anymore. This ident chip is expired. You is finding yourself unemployed now I am thinkings. However… yes, you is having a bank account with Stertus Bank. You might be having enough to get yourself going again with the insurances for your ship. I am wishing you luck.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "You thank Captain Abdullahi for his help. “No worries,” he replies. “Spacers have to look out for each other. Now I’m afraid, I have to be going. The others will need me. I wish you well, and you’re welcome on the Prospector any time.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 1 }],
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 1 }],
 				media: {
 					"image": {
 						src: "ceresMarket"
 					},
 					character: {
 						cast: "primary",
-						src: null
+						name: '',
+						src: ''
 					}
 				}
 			},
 			{
 				type: "paragraph",
 				text: "You wave a final goodbye to the crew as you head off. As you head into the market and weave through the endless shoppers and stalls and vendors, you’re assaulted by the smells of cooking and leather goods and plants and oils. You browse stalls selling everything from mining equipment to exotic ingredients to electrical supplies to ships. There’s even a stall selling antique books.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }],
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }],
 				media: {
 					character: {
 						cast: "primary",
-						src: null
+						name: '',
+						src: ''
 					}
 				}
 			},
@@ -485,35 +487,35 @@ export const storyChapters: StoryChapter[] = [
 				id: "recogniseOrHub",
 				text: "You stop at a small kiosk where an elderly woman is hawking handmade trinkets. She looks up at you with a curious expression. “You look lost, dear. Looking for something?”",
 				options: [
-					{ picked: 1, text: "Ask if she recognises you." },
-					{ picked: 2, text: "Ask for directions to an information hub." },
+					{ text: "Ask if she recognises you." },
+					{ text: "Ask for directions to an information hub." },
 				],
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "“Actually, I am a bit lost. I know this is an odd question, but you happen to recognise me?”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }, { type: "choice", choiceID: 8, optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }, { type: "choice", choiceId: "explainOrCouch", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "The woman squints at you, then shakes her head. “Can’t say I do, but if it’s information you’re looking for, you might want to try going to Garrett’s place. They keep records of everyone who comes through here.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }, { type: "choice", choiceID: 8, optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }, { type: "choice", choiceId: "explainOrCouch", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "“Could you point me to the nearest information vendor?”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }, { type: "choice", choiceID: 8, optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }, { type: "choice", choiceId: "explainOrCouch", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "The woman nods, pointing down a narrow alley. “Just down that way, then take a left. Garrett’s the one you want. You’ll see the sign.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "You find the office relatively easily. As you open the door and walk inside, you find yourself in a chaotic yet oddly organised space. It’s a small room that seems to burst at the seams with technology. The walls are lined with shelves, each one crammed with data pads, old-fashioned books, and various pieces of equipment. The shelves themselves are a patchwork of different materials, some metal, some wood, all bearing the marks of heavy use and hasty repair.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }],
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }],
 				media: {
 					"image": {
 						src: "garrett"
@@ -523,62 +525,62 @@ export const storyChapters: StoryChapter[] = [
 			{
 				type: "paragraph",
 				text: "In the centre of the room, a large, cluttered desk dominates the space. It’s covered in a mess of data pads, holo-displays, and a few old-style paper notebooks filled with scribbled notes and sketches. A multi-screen setup sits on the desk, each screen displaying different streams of data: news from the Belt, ship movements, market prices, and a running list of recent arrivals and departures from Ceres.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "The air is filled with a low hum of electronic equipment, punctuated by the occasional beep or chirp from one of the many devices strewn about. A single, flickering fluorescent light hangs from the ceiling, casting a harsh, uneven glow over the room.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "A figure sits on a chair facing the far wall of the room. “Ah hello there my friend,” he says, without turning around. “What is it you are wanting today from Garrett’s emporium of information?”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }]
 			},
 			{
 				type: "choice",
 				id: "explainOrCouch",
 				text: "You wonder for a moment how to explain your situation, and how much you should reveal.”",
 				options: [
-					{ picked: 1, text: "Explain and ask for help finding your identity." },
-					{ picked: 2, text: "Ask information about recent arrivals and missing persons." },
+					{ text: "Explain and ask for help finding your identity." },
+					{ text: "Ask information about recent arrivals and missing persons." },
 				],
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "“I’m trying to find out who I am. I was found in a damaged shuttle with no ID or memory.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }, { type: "choice", choiceID: "explainOrCouch", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }, { type: "choice", choiceId: "explainOrCouch", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "Garrett’s smile fades into a look of concern. “That is sounding serious. Let’s us see what we can be finding. I’ll need to be knowing any details you know. Anything, no matter how smallies it might seem might be helping of you.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }, { type: "choice", choiceID: "explainOrCouch", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }, { type: "choice", choiceId: "explainOrCouch", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "“I’m looking for information about recent arrivals in the past few days. Specifically, anyone found in a damaged shuttle, or lost ships.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }, { type: "choice", choiceID: "explainOrCouch", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }, { type: "choice", choiceId: "explainOrCouch", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "Garrett’s smile fades into a look of concern. “That is serious matters. Let’s us see what we can be finding. I’ll need to be knowing any details you know of the vessel you are being looking for knowings about.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }, { type: "choice", choiceID: "explainOrCouch", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }, { type: "choice", choiceId: "explainOrCouch", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "You tell him what you can, and then sit back and wait patiently whilst he works.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "After a while, he spins a screen around. “I am thinkings this is you,” he says. You look at the screen. You have an answer to who you are. You’re a security contractor. You worked solo on a small ship, the Celerity. You were reported missing a day ago, when you missed your scheduled check in with the company.",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "“Although it is saying you were working under a private contract on behalf of your employer. I am feeling sorry to be telling you but they are not now employing you anymore. This ident chip is expired. You is finding yourself unemployed now I am thinkings. However… yes, you is having a bank account with Stertus Bank. You might be having enough to get yourself going again with the insurances for your ship. Take this,” he says, and passes you a new ident chip. “This is coded to your palm print and DNA. It will be letting you have access to any systems and accounts you will be needing. Now I must be getting on I am afraid. I am wishing you luck.”",
-				requirements: [{ type: "choice", choiceID: "stayOrAlone", optionID: 2 }],
+				requirements: [{ type: "choice", choiceId: "stayOrAlone", optionId: 2 }],
 				media: {
 					"image": {
 						src: "ceresMarket"
@@ -588,17 +590,17 @@ export const storyChapters: StoryChapter[] = [
 			{
 				type: "paragraph",
 				text: "You feel a mix of relief and uncertainty. You know who you worked for. You’re in private security, most recently contracted by Delomir Industries.",
-				requirements: [{ type: "choice", choiceID: "employer", optionID: 1 }]
+				requirements: [{ type: "choice", choiceId: "employer", optionId: 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "You feel a mix of relief and uncertainty. You know who you worked for. You’re in private security, most recently contracted by Metagene Incorporated.",
-				requirements: [{ type: "choice", choiceID: "employer", optionID: 2 }]
+				requirements: [{ type: "choice", choiceId: "employer", optionId: 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "You feel a mix of relief and uncertainty. You know who you worked for. You’re in private security, most recently contracted by ParaSecurity Limited.",
-				requirements: [{ type: "choice", choiceID: "employer", optionID: 3 }]
+				requirements: [{ type: "choice", choiceId: "employer", optionId: 3 }]
 			},
 			{
 				type: "paragraph",
@@ -609,14 +611,14 @@ export const storyChapters: StoryChapter[] = [
 				id: "apologiseOrContinue",
 				text: "Lost in thought, you almost collide with a woman carrying a stack of supplies. She staggers for a moment, but manages to keep her balance. “Watch it!”, she snaps, her voice laced with irritation.",
 				options: [
-					{ picked: 1, text: "Apologise and offer to help." },
-					{ picked: 2, text: "Brush it off and keep walking." }
+					{ text: "Apologise and offer to help." },
+					{ text: "Brush it off and keep walking." }
 				]
 			},
 			{
 				type: "paragraph",
 				text: "You quickly reach out to steady her. “I’m so sorry! Let me help you with those”.",
-				requirements: [{ type: "choice", choiceID: "apologiseOrContinue", "optionID": 1 }],
+				requirements: [{ type: "choice", choiceId: "apologiseOrContinue", "optionId": 1 }],
 				media: {
 					character: {
 						cast: "primary",
@@ -628,17 +630,17 @@ export const storyChapters: StoryChapter[] = [
 			{
 				type: "paragraph",
 				text: "The woman gives you a scrutinising look, her irritation fading into curiosity. “Thanks… I guess I was a bit harsh. I’m Mara.” She extended a hand, whilst passing some of the load to you.",
-				requirements: [{ type: "choice", choiceID: "apologiseOrContinue", "optionID": 1 }]
+				requirements: [{ type: "choice", choiceId: "apologiseOrContinue", "optionId": 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "You shrug it off and kept walking, your mind too lost in your own thoughts to deal with another person’s problems.",
-				requirements: [{ type: "choice", choiceID: "apologiseOrContinue", "optionID": 2 }]
+				requirements: [{ type: "choice", choiceId: "apologiseOrContinue", "optionId": 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "You ignore the woman’s look of annoyance and go take another step, but a feeling passes over you and makes you stop. There’s something familiar about her. You turn back, trying to place her in your memory. “Wait… I’m sorry. That was rude of me. It’s not been a good few days. Can I help?”",
-				requirements: [{ type: "choice", choiceID: "apologiseOrContinue", "optionID": 2 }],
+				requirements: [{ type: "choice", choiceId: "apologiseOrContinue", "optionId": 2 }],
 				media: {
 					character: {
 						cast: "primary",
@@ -650,7 +652,7 @@ export const storyChapters: StoryChapter[] = [
 			{
 				type: "paragraph",
 				text: "The woman gives you a scrutinising look, her irritation fading into curiosity. “Thanks… I guess I was a bit harsh too. I’m Mara.” She extended a hand, whilst passing some of the load to you.",
-				requirements: [{ type: "choice", choiceID: "apologiseOrContinue", "optionID": 2 }]
+				requirements: [{ type: "choice", choiceId: "apologiseOrContinue", "optionId": 2 }]
 			},
 			{
 				type: "paragraph",
@@ -674,8 +676,7 @@ export const storyChapters: StoryChapter[] = [
 			},
 			{
 				type: "paragraph",
-				text: "Mara’s expression turns thoughtful. “I joined the military straight out of school. Served for 12 years, and went everywhere. All over Earth, missions on Mars and Titan. I was at the Skeldan uprising. Eventually I got asked to run protection for a shipping line after I mustered out. The pay was good. It could have been a good gig. But after everything I’d done, all the things I’d seen? I wanted to use my skills to help people. Combat pilots don’t get to make a lot of friends. Ceres seemed like a place where I could make a difference, and start fresh.”",
-				requirements: [{ type: "choice", "choiceID": 6, "optionID": 1 }]
+				text: "Mara’s expression turns thoughtful. “I joined the military straight out of school. Served for 12 years, and went everywhere. All over Earth, missions on Mars and Titan. I was at the Skeldan uprising. Eventually I got asked to run protection for a shipping line after I mustered out. The pay was good. It could have been a good gig. But after everything I’d done, all the things I’d seen? I wanted to use my skills to help people. Combat pilots don’t get to make a lot of friends. Ceres seemed like a place where I could make a difference, and start fresh.”"
 			},
 			{
 				type: "paragraph",
@@ -702,8 +703,8 @@ export const storyChapters: StoryChapter[] = [
 				id: "maraFollowOrStay",
 				text: "She leads you through the streets to a transport pod. It whisks you both away, and a minute later, you’re standing in the financial district. Everything here smells of money. Everything looks clean and lush, a testament to what enough financial resource can do to a place. Even one built in a cave in a rock in space. There are even plants here, not growing for their oxygen generation or air filtration properties, but just because they’re beautiful. In its own way, its terrifying.",
 				options: [
-					{ picked: 1, text: "Ask Mara to come in." },
-					{ picked: 2, text: "Ask Mara to wait." }
+					{ text: "Ask Mara to come in." },
+					{ text: "Ask Mara to wait." }
 				]
 			},
 			{
@@ -713,12 +714,12 @@ export const storyChapters: StoryChapter[] = [
 			{
 				type: "paragraph",
 				text: "You walk in through the revolving door, with Mara following close behind. It’s beautiful inside. Old. You see a row of counters, and a small queue of people lined up. You join the queue, and a minute or two later, you’re standing in front of the bank’s representitive.",
-				requirements: [{ type: "choice", choiceID: "maraFollowOrStay", "optionID": 1 }]
+				requirements: [{ type: "choice", choiceId: "maraFollowOrStay", "optionId": 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "You walk in through the revolving door, whilst Mara watches from outside. It’s beautiful inside. Old. You see a row of counters, and a small queue of people lined up. You join the queue, and a minute or two later, you’re standing in front of the bank’s representitive.",
-				requirements: [{ type: "choice", choiceID: "maraFollowOrStay", "optionID": 2 }]
+				requirements: [{ type: "choice", choiceId: "maraFollowOrStay", "optionId": 2 }]
 			},
 			{
 				type: "paragraph",
@@ -761,25 +762,25 @@ export const storyChapters: StoryChapter[] = [
 				id: "mulling",
 				text: "You follow Mara back to the transport pod, and it speeds you away. You’re thankful for the peace as it zips along. You wonder what to do. What do you even do with a space station?. You consider your options. You think about:",
 				options: [
-					{ picked: 1, text: "Astro-mining." },
-					{ picked: 2, text: "Security contracting." },
-					{ picked: 3, text: "Information brokering." }
+					{ text: "Astro-mining." },
+					{ text: "Security contracting." },
+					{ text: "Information brokering." }
 				]
 			},
 			{
 				type: "paragraph",
 				text: "You find yourself reflecting on your time with the crew of the Prospector. You wonder what will become of the crew. From the time you spent with them, you know astro-mining is a hard life. Out amongst the cold vacuum, hundreds of thousands of miles from the nearest people who aren’t on your crew. It’s a life. You hope they’ll be alright. It might be you could use the station to help people like them. A way-post in the void.",
-				requirements: [{ type: "choice", choiceID: "mulling", "optionID": 1 }]
+				requirements: [{ type: "choice", choiceId: "mulling", "optionId": 1 }]
 			},
 			{
 				type: "paragraph",
 				text: "You wonder about your former life. You wonder if you were a good person. You suspect people who end up in security contracting probably have an interesting set of skills and a past which enabled them to acquire those skills. It’s not hard to imagine versions of that life which are less than pleasant. Still, a space station gives options. You could set up a security practice there, helping bring safety in the void.",
-				requirements: [{ type: "choice", choiceID: "mulling", "optionID": 2 }]
+				requirements: [{ type: "choice", choiceId: "mulling", "optionId": 2 }]
 			},
 			{
 				type: "paragraph",
 				text: "You think about Garrett. It’s a strange life he has. Listening to everything, saying little, and only when asked. Dealing in information. You wonder if it’s something you could do. Someone with a background in security consultancy could probably find a path into that life. There will always be a need for someone who knows the answers out in the asteroid belt.",
-				requirements: [{ type: "choice", choiceID: "mulling", "optionID": 3 }]
+				requirements: [{ type: "choice", choiceId: "mulling", "optionId": 3 }]
 			},
 			{
 				type: "paragraph",

@@ -32,7 +32,7 @@ export interface StoryNode {
   text?: string;
   duration?: number;
   media?: StoryMedia;
-  options?: { picked: number; text: string }[];
+  options?: { text: string }[];
   mode?: 'cards';
   id?: string;
   requirements?: StoryRequirement[];

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreditCard, Heart, Zap, Brain, Coins, Users } from 'lucide-react';
+import { CreditCard, Heart, Brain, Coins, Users } from 'lucide-react';
 import { ResourceItem } from './ResourceItem';
 import { Faction } from '../types/game';
 
@@ -16,9 +16,7 @@ interface ResourceBarProps {
 export const ResourceBar: React.FC<ResourceBarProps> = ({
   credits,
   condition,
-  factions,
   stress,
-  energyPoints,
   debt,
   onFactionClick,
 }) => {

@@ -1,4 +1,4 @@
-import { StoryNode, StoryRequirement } from '../types/story';
+import { StoryNode } from '../types/story';
 
 export const checkNodeRequirements = (
   node: StoryNode,

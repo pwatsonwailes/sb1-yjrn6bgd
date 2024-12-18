@@ -37,6 +37,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
     if (currentNode.media?.character) {
       setActiveCharacters(prev => {
         const next = new Set(prev);
+
         if (currentNode.media?.character?.name) {
           next.add(currentNode.media.character.name);
         }
@@ -53,8 +54,8 @@ export const StoryView: React.FC<StoryViewProps> = ({
     }
   };
 
-  const handleChoice = (choiceId: string, picked: number) => {
-    onChoice(choiceId, picked);
+  const handleChoice = (choiceId: string, optionId: number) => {
+    onChoice(choiceId, optionId);
     handleNext();
   };
 
@@ -74,7 +75,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
         return (
           <ChoiceNode
             node={node}
-            onChoice={(picked) => handleChoice(node.id!, picked)}
+            onChoice={handleChoice}
           />
         );
       case 'button':

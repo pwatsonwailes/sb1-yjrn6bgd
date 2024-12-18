@@ -4,7 +4,7 @@ import { StoryNode } from '../../../types/story';
 
 interface ChoiceNodeProps {
   node: StoryNode;
-  onChoice: (choiceId: string, picked: number) => void;
+  onChoice: (choiceId: string, optionId: number) => void;
 }
 
 export const ChoiceNode: React.FC<ChoiceNodeProps> = ({ node, onChoice }) => {
@@ -34,11 +34,11 @@ export const ChoiceNode: React.FC<ChoiceNodeProps> = ({ node, onChoice }) => {
       <div className="space-y-3">
         {node.options.map((option, index) => (
           <motion.button
-            key={option.picked}
+            key={`option${index}`}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
-            onClick={() => onChoice(node.id!, option.picked)}
+            transition={{ delay: index * 0.3 }}
+            onClick={() => onChoice(node.id!, index + 1)}
             className="w-full p-4 bg-gray-800 hover:bg-gray-700 rounded-lg text-white text-left transition-colors"
           >
             {option.text}

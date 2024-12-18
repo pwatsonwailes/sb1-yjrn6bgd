@@ -13,7 +13,7 @@ export const ParagraphNode: React.FC<ParagraphNodeProps> = ({ node, onComplete }
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsComplete(true);
-    }, node.duration || 2000);
+    }, node.duration || 200);
 
     return () => clearTimeout(timer);
   }, [node.duration]);

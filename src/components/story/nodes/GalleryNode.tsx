@@ -69,19 +69,6 @@ export const GalleryNode: React.FC<GalleryNodeProps> = ({ node, onComplete }) =>
       >
         Skip
       </button>
-
-      {/* Progress indicator */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2">
-        {images.map((_, index) => (
-          <div
-            key={index}
-            className={`
-              w-2 h-2 rounded-full transition-colors
-              ${index === currentImageIndex ? 'bg-white' : 'bg-white bg-opacity-50'}
-            `}
-          />
-        ))}
-      </div>
     </div>
   );
 };
