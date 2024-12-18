@@ -4,7 +4,7 @@ import { findNextValidNode } from './nodes';
 export const getNextState = (
   prevState: StoryState,
   chapters: StoryChapter[],
-  action: 'choice' | 'complete'
+  action: 'choice' | 'complete' | 'next'
 ): StoryState => {
   const chapter = chapters[prevState.currentChapter];
   if (!chapter) return { ...prevState, isPlaying: false };
@@ -26,6 +26,7 @@ export const getNextState = (
         currentNode: 0
       };
     }
+
     // If no more chapters, end the story
     return { ...prevState, isPlaying: false };
   }

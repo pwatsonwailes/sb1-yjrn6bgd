@@ -42,6 +42,7 @@ export interface StoryChapter {
   id: number;
   title: string;
   nodes: StoryNode[];
+  nodeIndex?: number;
 }
 
 export interface StoryState {

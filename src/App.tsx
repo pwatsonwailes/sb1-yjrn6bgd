@@ -34,7 +34,7 @@ export function App() {
 
   const [gameStarted, setGameStarted] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('board');
-  const { storyState, getCurrentChapter, handleChoice, handleComplete } = useStory(storyChapters);
+  const { storyState, getCurrentChapter, handleChoice, handleComplete, handleNext } = useStory(storyChapters);
   const { tutorialState, getCurrentStep, completeStep, skipTutorial } = useTutorial();
 
   const selectedEnergy = useMemo(() => {
@@ -42,23 +42,6 @@ export function App() {
       .filter(card => selectedCards.has(card.id))
       .reduce((total, card) => total + card.cost.energy, 0);
   }, [gameState.hand, selectedCards]);
-
-  const handleTutorialAction = (action: { type: string; cardId?: string }) => {
-    switch (action.type) {
-      case 'select-card':
-        // Tutorial will complete when any card is selected
-        return;
-      case 'end-turn':
-        // Tutorial will complete when turn ends
-        return;
-      case 'view-factions':
-        setCurrentView('factions');
-        break;
-      case 'view-deck':
-        setCurrentView('deck');
-        break;
-    }
-  };
 
   // Update card click handler
   const handleCardClick = (card: CardType) => {
@@ -76,17 +59,6 @@ export function App() {
     }
   };
 
-  // Update end turn handler
-  const handleEndTurn = async () => {
-    await endTurn();
-    
-    // Check if this completes a tutorial step
-    const currentStep = getCurrentStep();
-    if (currentStep?.action?.type === 'end-turn') {
-      completeStep(currentStep.id);
-    }
-  };
-
   if (!gameStarted) {
     return <IntroScreen onStartGame={() => setGameStarted(true)} />;
   }
@@ -96,6 +68,7 @@ export function App() {
       <StoryView
         chapter={getCurrentChapter()}
         onChoice={handleChoice}
+        onNext={handleNext}
         onComplete={handleComplete}
       />
     );
@@ -157,7 +130,6 @@ export function App() {
         <ResourceBar
           credits={gameState.credits}
           condition={gameState.condition}
-          factions={gameState.factions}
           stress={gameState.stress}
           energyPoints={gameState.energyPoints}
           debt={gameState.debt}

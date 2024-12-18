@@ -4,15 +4,15 @@ export const checkNodeRequirements = (
   node: StoryNode,
   choices: Record<string, number>
 ): boolean => {
-  if (!node.requirements || node.requirements.length === 0) return true;
+  if (!node.requirements || node.requirements.length === 0)
+    return true
 
   return node.requirements.every(req => {
     if (!req || !req.choiceId) return true;
 
     switch (req.type) {
       case 'choice':
-        const userChoice = choices[req.choiceId];
-        return userChoice === req.optionId;
+        return choices[req.choiceId] === req.optionId;
       default:
         return true;
     }
@@ -25,9 +25,15 @@ export const findNextValidNode = (
   choices: Record<string, number>
 ): { node: StoryNode; index: number } | null => {
   for (let i = startIndex; i < nodes.length; i++) {
-    if (checkNodeRequirements(nodes[i], choices)) {
-      return { node: nodes[i], index: i };
+    const node = nodes[i]
+    console.log('checking', node, choices)
+
+    if (checkNodeRequirements(node, choices)) {
+      console.log('checked - valid', node)
+      return { node, index: i };
     }
+    else 
+      console.log('checked - invalid', node)
   }
   return null;
 };

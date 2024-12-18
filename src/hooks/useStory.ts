@@ -24,12 +24,25 @@ export const useStory = (chapters: StoryChapter[]) => {
 
     if (!currentValid) return null;
 
-    // Return chapter with only the current valid node
+    // Return chapter with only the current valid node index
     return {
       ...chapter,
-      nodes: [currentValid.node]
+      nodeIndex: currentValid.index
     };
   }, [chapters, storyState.currentChapter, storyState.currentNode, storyState.choices]);
+
+  const handleNext = () => {
+    const chapter = chapters[storyState.currentChapter];
+
+    for (let index = storyState.currentNode; index < chapter.nodes.length - 1; index++) {
+      if (findNextValidNode(chapter.nodes, index, storyState.choices)) {
+        setStoryState(prev => getNextState(prev, chapters, 'next'));
+        return
+      }
+    }
+
+    return false
+  };
 
   const handleChoice = useCallback((choiceId: string, picked: number) => {
     setStoryState(prev => {
@@ -41,7 +54,7 @@ export const useStory = (chapters: StoryChapter[]) => {
           [choiceId]: picked
         }
       };
-      
+
       // Then calculate the next state based on the new choices
       return getNextState(newState, chapters, 'choice');
     });
@@ -55,6 +68,7 @@ export const useStory = (chapters: StoryChapter[]) => {
     storyState,
     getCurrentChapter,
     handleChoice,
+    handleNext,
     handleComplete
   };
 };

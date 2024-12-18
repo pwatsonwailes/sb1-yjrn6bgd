@@ -6,25 +6,26 @@ import { ParagraphNode } from './nodes/ParagraphNode';
 import { ChoiceNode } from './nodes/ChoiceNode';
 import { ButtonNode } from './nodes/ButtonNode';
 import { CharacterPanel } from './CharacterPanel';
-import { checkNodeRequirements } from '../../utils/story';
+import { checkNodeRequirements } from '../../utils/story/nodes';
 import { useAudio } from '../../utils/audio';
 
 interface StoryViewProps {
   chapter: StoryChapter;
   onComplete: () => void;
+  onNext: () => void;
   onChoice: (choiceId: string, picked: number) => void;
   choices: Record<string, number>;
 }
 
 export const StoryView: React.FC<StoryViewProps> = ({
   chapter,
+  onNext,
   onComplete,
   onChoice,
   choices = {}
 }) => {
-  const [currentNodeIndex, setCurrentNodeIndex] = useState(0);
   const [activeCharacters, setActiveCharacters] = useState<Set<string>>(new Set());
-  const currentNode = chapter.nodes[currentNodeIndex];
+  const currentNode = (typeof chapter.nodeIndex !== 'undefined') ? chapter.nodes[chapter.nodeIndex] : chapter.nodes[0];
 
   useAudio(
     currentNode?.media?.music?.track,
@@ -46,30 +47,21 @@ export const StoryView: React.FC<StoryViewProps> = ({
     }
   }, [currentNode]);
 
-  const handleNext = () => {
-    if (currentNodeIndex < chapter.nodes.length - 1) {
-      setCurrentNodeIndex(prev => prev + 1);
-    } else {
-      onComplete();
-    }
-  };
-
   const handleChoice = (choiceId: string, optionId: number) => {
     onChoice(choiceId, optionId);
-    handleNext();
   };
 
   const renderNode = (node: StoryNode) => {
     if (!node || !checkNodeRequirements(node, choices)) {
-      handleNext();
+      onNext();
       return null;
     }
 
     switch (node.type) {
       case 'gallery':
-        return <GalleryNode node={node} onComplete={handleNext} />;
+        return <GalleryNode node={node} onComplete={onNext} />;
       case 'paragraph':
-        return <ParagraphNode node={node} onComplete={handleNext} />;
+        return <ParagraphNode node={node} onComplete={onNext} />;
       case 'choice':
         if (!node.id) return null;
         return (
@@ -82,7 +74,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
         return (
           <ButtonNode
             node={node}
-            onComplete={node.mode === 'cards' ? onComplete : handleNext}
+            onComplete={node.mode === 'cards' ? onComplete : onNext}
           />
         );
       default:
@@ -108,7 +100,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
       <div className="w-2/3 relative">
         <AnimatePresence mode="wait">
           <motion.div
-            key={`bg-${currentNodeIndex}`}
+            key={`bg-${chapter.nodeIndex}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -138,7 +130,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
         <div className="flex-1 overflow-y-auto">
           <AnimatePresence mode="wait">
             <motion.div
-              key={`content-${currentNodeIndex}`}
+              key={`content-${chapter.nodeIndex}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
