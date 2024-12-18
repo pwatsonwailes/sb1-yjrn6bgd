@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card } from './components/Card';
 import { ResourceBar } from './components/ResourceBar';
 import { EventLog } from './components/EventLog';
 import { FactionPanel } from './components/FactionPanel';
 import { DeckManager } from './components/deck/DeckManager';
+import { EnergyCounter } from './components/EnergyCounter';
 import { useGameState } from './hooks/useGameState';
 import { Card as CardType } from './types/cards';
 import { allCards } from './data/cards';
@@ -17,12 +18,24 @@ export function App() {
     factions,
     selectCard,
     endTurn,
-    updateDeck
+    updateDeck,
+    purchaseCard
   } = useGameState();
 
   const [showDeckManager, setShowDeckManager] = useState(false);
 
+  const selectedEnergy = useMemo(() => {
+    return gameState.hand
+      .filter(card => selectedCards.has(card.id))
+      .reduce((total, card) => total + card.cost.energy, 0);
+  }, [gameState.hand, selectedCards]);
+
   const handleCardClick = (card: CardType) => {
+    // Don't allow selection if it would exceed available energy
+    if (!selectedCards.has(card.id) && 
+        selectedEnergy + card.cost.energy > gameState.energyPoints) {
+      return;
+    }
     selectCard(card);
   };
 
@@ -54,6 +67,8 @@ export function App() {
             deck={gameState.deck}
             allCards={allCards}
             onUpdateDeck={updateDeck}
+            credits={gameState.credits}
+            onPurchaseCard={purchaseCard}
           />
         ) : (
           <div className="bg-gray-800 rounded-lg p-4">
@@ -91,7 +106,9 @@ export function App() {
                   onClick={() => handleCardClick(card)}
                   disabled={
                     gameState.energyPoints < card.cost.energy ||
-                    (card.cost.credits && gameState.credits < card.cost.credits)
+                    (card.cost.credits && gameState.credits < card.cost.credits) ||
+                    (!selectedCards.has(card.id) && 
+                     selectedEnergy + card.cost.energy > gameState.energyPoints)
                   }
                   selected={selectedCards.has(card.id)}
                   playing={playingCards.has(card.id)}
@@ -103,6 +120,12 @@ export function App() {
       </div>
       
       <EventLog events={events} />
+      
+      <EnergyCounter
+        currentEnergy={gameState.energyPoints}
+        maxEnergy={gameState.energyPoints}
+        selectedEnergy={selectedEnergy}
+      />
     </div>
   );
 }

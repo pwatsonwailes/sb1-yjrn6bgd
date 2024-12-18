@@ -3,9 +3,40 @@ import { updateMarketPrices } from '../market/prices';
 import { drawCards } from './drawCards';
 import { DebtEvent, GameEvent } from '../../types/events';
 
+const applyCardPenalty = (state: GameState, penalty: CardPenalty): [GameState, GameEvent] => {
+  let newState = { ...state };
+  let value = penalty.value;
+
+  // If it's a percentage penalty, calculate the actual value
+  if (penalty.percentage) {
+    value = Math.floor(state[penalty.type] * (penalty.value / 100));
+  }
+
+  newState[penalty.type] += value;
+
+  const event: GameEvent = {
+    id: Math.random().toString(36).substr(2, 9),
+    message: `Missed payment: ${value} ${penalty.type}`,
+    type: 'danger',
+    timestamp: Date.now()
+  };
+
+  return [newState, event];
+};
+
 export const endTurn = (state: GameState): [GameState, GameEvent[]] => {
   const events: GameEvent[] = [];
-  const newDiscardPile = [...state.discardPile, ...state.hand];
+  const newDiscardPile = [...state.discardPile];
+  
+  // Check for unplayed mandatory cards and apply penalties
+  state.hand.forEach(card => {
+    if (card.mandatory && card.penalty) {
+      const [updatedState, penaltyEvent] = applyCardPenalty(state, card.penalty);
+      state = updatedState;
+      events.push(penaltyEvent);
+    }
+    newDiscardPile.push(card);
+  });
   
   let newState = {
     ...state,

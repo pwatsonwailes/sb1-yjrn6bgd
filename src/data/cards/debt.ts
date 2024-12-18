@@ -6,12 +6,17 @@ export const debtCards: Card[] = [
     name: 'Subscription Payment',
     type: 'subscription',
     rarity: 'starter',
-    description: 'Pay your mod subscription fees.',
+    description: 'Pay your mod subscription fees. If not paid, lose 10% condition.',
     flavor: 'The fine print doesn\'t care if you\'re broke.',
     cost: { energy: 0, credits: 200 },
     mandatory: true,
+    penalty: {
+      type: 'condition',
+      value: -10,
+      percentage: true
+    },
     effects: [
-      { type: 'condition', value: -20 }
+      { type: 'condition', value: -5 }
     ]
   },
   {

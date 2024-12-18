@@ -7,12 +7,18 @@ interface DeckListProps {
   deck: Card[];
   availableCards: Card[];
   onUpdateDeck: (newDeck: Card[]) => void;
+  onPurchaseCard: (card: Card) => void;
+  calculateCardCost: (card: Card) => number;
+  credits: number;
 }
 
 export const DeckList: React.FC<DeckListProps> = ({
   deck,
   availableCards,
   onUpdateDeck,
+  onPurchaseCard,
+  calculateCardCost,
+  credits
 }) => {
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -65,18 +71,24 @@ export const DeckList: React.FC<DeckListProps> = ({
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-white">Available Cards</h3>
         <div className="space-y-2">
-          {availableCards.map(card => (
-            <DeckCard
-              key={card.id}
-              card={card}
-              onAdd={() => {
-                if (deck.length < 30) {
-                  onUpdateDeck([...deck, card]);
-                }
-              }}
-              disabled={deck.length >= 30}
-            />
-          ))}
+          {availableCards.map(card => {
+            const cost = calculateCardCost(card);
+            const canAfford = credits >= cost;
+            
+            return (
+              <DeckCard
+                key={card.id}
+                card={card}
+                cost={cost}
+                onAdd={() => {
+                  if (deck.length < 30 && canAfford) {
+                    onPurchaseCard(card);
+                  }
+                }}
+                disabled={deck.length >= 30 || !canAfford}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

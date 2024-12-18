@@ -116,6 +116,21 @@ export const useGameState = () => {
     });
   }, [addEvent]);
 
+  const purchaseCard = useCallback((card: Card) => {
+    const cost = calculateCardCost(card);
+    
+    setGameState(current => ({
+      ...current,
+      credits: current.credits - cost,
+      deck: [...current.deck, { ...card, id: `${card.id}-${Date.now()}` }]
+    }));
+  
+    addEvent({
+      message: `Purchased ${card.name}`,
+      type: 'success'
+    });
+  }, [addEvent]);
+
   return {
     gameState,
     selectedCards,
@@ -126,6 +141,7 @@ export const useGameState = () => {
     selectCard,
     endTurn,
     updateFactionReputation,
-    updateDeck
+    updateDeck,
+    purchaseCard
   };
 };

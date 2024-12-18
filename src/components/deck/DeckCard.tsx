@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from '../../types/cards';
-import { Zap, Plus, Minus } from 'lucide-react';
+import { Zap, Plus, Minus, CreditCard } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface DeckCardProps {
@@ -8,13 +8,15 @@ interface DeckCardProps {
   onAdd?: () => void;
   onRemove?: () => void;
   disabled?: boolean;
+  cost?: number;
 }
 
 export const DeckCard: React.FC<DeckCardProps> = ({
   card,
   onAdd,
   onRemove,
-  disabled
+  disabled,
+  cost
 }) => {
   return (
     <motion.div
@@ -26,13 +28,31 @@ export const DeckCard: React.FC<DeckCardProps> = ({
       `}
     >
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1 text-yellow-400">
-          <Zap size={16} />
-          <span>{card.cost.energy}</span>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 text-yellow-400">
+            <Zap size={16} />
+            <span>{card.cost.energy}</span>
+          </div>
+          {cost !== undefined && cost > 0 && (
+            <div className="flex items-center gap-1 text-green-400">
+              <CreditCard size={16} />
+              <span>{cost}</span>
+            </div>
+          )}
         </div>
         
         <div>
-          <h4 className="font-medium text-white">{card.name}</h4>
+          <div className="flex items-center gap-2">
+            <h4 className="font-medium text-white">{card.name}</h4>
+            <span className={`text-xs px-2 py-0.5 rounded-full ${
+              card.rarity === 'rare' ? 'bg-purple-600' :
+              card.rarity === 'uncommon' ? 'bg-blue-600' :
+              card.rarity === 'common' ? 'bg-green-600' :
+              'bg-gray-600'
+            }`}>
+              {card.rarity}
+            </span>
+          </div>
           <p className="text-sm text-gray-400">{card.description}</p>
         </div>
       </div>

@@ -10,6 +10,12 @@ export interface CardEffect {
   corporationId?: string;
 }
 
+export interface CardPenalty {
+  type: EffectType;
+  value: number;
+  percentage?: boolean;
+}
+
 export interface CardCost {
   energy: number;
   credits?: number;
@@ -25,5 +31,6 @@ export interface Card {
   cost: CardCost;
   effects: CardEffect[];
   mandatory?: boolean;
+  penalty?: CardPenalty;
   image?: string;
 }
