@@ -7,7 +7,7 @@ interface DeckListProps {
   deck: Card[];
   availableCards: Card[];
   onUpdateDeck: (newDeck: Card[]) => void;
-  onPurchaseCard: (card: Card) => void;
+  onPurchaseCard: (card: Card, cost: number) => void;
   calculateCardCost: (card: Card) => number;
   credits: number;
 }
@@ -82,7 +82,7 @@ export const DeckList: React.FC<DeckListProps> = ({
                 cost={cost}
                 onAdd={() => {
                   if (deck.length < 30 && canAfford) {
-                    onPurchaseCard(card);
+                    onPurchaseCard(card, cost);
                   }
                 }}
                 disabled={deck.length >= 30 || !canAfford}

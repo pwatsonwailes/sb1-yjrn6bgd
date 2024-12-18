@@ -11,7 +11,7 @@ interface DeckManagerProps {
   allCards: Card[];
   onUpdateDeck: (newDeck: Card[]) => void;
   credits: number;
-  onPurchaseCard: (card: Card) => void;
+  onPurchaseCard: (card: Card, cost: number) => void;
 }
 
 const calculateCardCost = (card: Card): number => {
