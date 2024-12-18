@@ -1,11 +1,11 @@
-import { Corporation } from './factions';
+import { Faction } from './factions';
 import { Card } from './cards';
-import { MarketState } from '../engine/market/types';
+import { MarketPricesState } from '../engine/market/types';
 
 export interface GameState {
   credits: number;
   condition: number;
-  corporations: Corporation[];
+  factions: Faction[];
   stress: number;
   energyPoints: number;
   deck: Card[];
@@ -14,7 +14,7 @@ export interface GameState {
   turn: number;
   debt: number;
   debtPaymentDue: number;
-  marketState: MarketState;
+  marketState: MarketPricesState;
 }
 
 export interface MarketState {

@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Card, GameState } from '../types/game';
+import { CardCost } from '../types/cards';
 import { getInitialState } from '../data/initialState';
 import { playCard as playCardAction } from '../engine/actions/playCard';
 import { drawCards as drawCardsAction } from '../engine/actions/drawCards';
@@ -69,7 +70,7 @@ export const useGameState = () => {
     if (selectedCards.size === 0) return;
     
     const newState = await playSelectedCards();
-    const [finalState, newEvents] = endTurnAction(newState);
+    const [finalState, newEvents] = endTurnAction(newState, selectedCards);
     
     setSelectedCards(new Set());
     setPlayingCards(new Set());
@@ -83,7 +84,7 @@ export const useGameState = () => {
     });
   }, [playSelectedCards, addEvent]);
 
-  const handleCardEffect = useCallback((card: Card, effect: CardEffect) => {
+  const handleCardEffect = useCallback((effect: CardEffect) => {
     if (effect.type === 'reputation' && effect.factionId) {
       const faction = factions.find(f => f.id === effect.factionId);
       if (faction) {
@@ -116,6 +117,21 @@ export const useGameState = () => {
     });
   }, [addEvent]);
 
+  const purchaseCard = useCallback((card: Card, cost: CardCost) => {
+    const creditCost = cost.credits ? cost.credits : 0
+
+    setGameState(current => ({
+      ...current,
+      credits: current.credits - creditCost,
+      deck: [...current.deck, { ...card, id: `${card.id}-${Date.now()}` }]
+    }));
+  
+    addEvent({
+      message: `Purchased ${card.name}`,
+      type: 'success'
+    });
+  }, [addEvent]);
+
   return {
     gameState,
     selectedCards,
@@ -125,7 +141,9 @@ export const useGameState = () => {
     drawCards,
     selectCard,
     endTurn,
+    handleCardEffect,
     updateFactionReputation,
-    updateDeck
+    updateDeck,
+    purchaseCard
   };
 };

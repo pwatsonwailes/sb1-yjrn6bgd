@@ -19,7 +19,7 @@ export interface MarketModifier {
     duration: number; // turns remaining
   }
   
-  export interface MarketState {
+  export interface MarketPricesState {
     resourcePrices: Record<string, ResourcePrice>;
     globalModifier: number;
     trends: Record<string, MarketTrend>;

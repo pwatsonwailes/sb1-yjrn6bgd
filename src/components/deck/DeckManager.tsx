@@ -4,18 +4,32 @@ import { DeckStats } from './DeckStats';
 import { CardFilters } from './CardFilters';
 import { Card } from '../../types/cards';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Library, Filter, BarChart2 } from 'lucide-react';
+import { Library, Filter, BarChart2, CreditCard } from 'lucide-react';
 
 interface DeckManagerProps {
   deck: Card[];
   allCards: Card[];
   onUpdateDeck: (newDeck: Card[]) => void;
+  credits: number;
+  onPurchaseCard: (card: Card, cost: number) => void;
 }
+
+const calculateCardCost = (card: Card): number => {
+  switch (card.rarity) {
+    case 'rare': return 500;
+    case 'uncommon': return 300;
+    case 'common': return 150;
+    case 'starter': return 0;
+    default: return 0;
+  }
+};
 
 export const DeckManager: React.FC<DeckManagerProps> = ({
   deck,
   allCards,
   onUpdateDeck,
+  credits,
+  onPurchaseCard
 }) => {
   const [view, setView] = useState<'list' | 'stats'>('list');
   const [filters, setFilters] = useState({
@@ -40,23 +54,29 @@ export const DeckManager: React.FC<DeckManagerProps> = ({
           <Library className="w-6 h-6" />
           Deck Manager
         </h2>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setView('list')}
-            className={`p-2 rounded-lg ${
-              view === 'list' ? 'bg-indigo-600' : 'bg-gray-700'
-            }`}
-          >
-            <Filter className="w-5 h-5 text-white" />
-          </button>
-          <button
-            onClick={() => setView('stats')}
-            className={`p-2 rounded-lg ${
-              view === 'stats' ? 'bg-indigo-600' : 'bg-gray-700'
-            }`}
-          >
-            <BarChart2 className="w-5 h-5 text-white" />
-          </button>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-green-400">
+            <CreditCard className="w-5 h-5" />
+            <span>{credits} credits</span>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setView('list')}
+              className={`p-2 rounded-lg ${
+                view === 'list' ? 'bg-indigo-600' : 'bg-gray-700'
+              }`}
+            >
+              <Filter className="w-5 h-5 text-white" />
+            </button>
+            <button
+              onClick={() => setView('stats')}
+              className={`p-2 rounded-lg ${
+                view === 'stats' ? 'bg-indigo-600' : 'bg-gray-700'
+              }`}
+            >
+              <BarChart2 className="w-5 h-5 text-white" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -75,6 +95,9 @@ export const DeckManager: React.FC<DeckManagerProps> = ({
               deck={deck}
               availableCards={filteredCards}
               onUpdateDeck={onUpdateDeck}
+              onPurchaseCard={onPurchaseCard}
+              calculateCardCost={calculateCardCost}
+              credits={credits}
             />
           ) : (
             <DeckStats deck={deck} />

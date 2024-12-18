@@ -7,7 +7,13 @@ export interface CardEffect {
   value: number;
   chance?: number;
   duration?: number;
-  corporationId?: string;
+  factionId?: string;
+}
+
+export interface CardPenalty {
+  type: EffectType;
+  value: number;
+  percentage?: boolean;
 }
 
 export interface CardCost {
@@ -25,5 +31,6 @@ export interface Card {
   cost: CardCost;
   effects: CardEffect[];
   mandatory?: boolean;
+  penalty?: CardPenalty;
   image?: string;
 }

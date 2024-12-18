@@ -1,20 +1,32 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle, TrendingUp, CreditCard, Shield } from 'lucide-react';
-import { GameEvent } from '../types/events';
+import { AlertTriangle, TrendingUp, CreditCard, Shield, Building2, Zap } from 'lucide-react';
+import { GameEvent, FactionEvent } from '../types/events';
 
 interface EventLogProps {
   events: GameEvent[];
 }
 
-const getEventIcon = (type: GameEvent['type']) => {
-  switch (type) {
+const getEventIcon = (event: GameEvent) => {
+  switch (event.type) {
     case 'market':
       return <TrendingUp className="w-5 h-5" />;
     case 'debt':
       return <CreditCard className="w-5 h-5" />;
     case 'reputation':
       return <Shield className="w-5 h-5" />;
+    case 'faction':
+      const factionEvent = event as FactionEvent;
+      switch (factionEvent.details.eventType) {
+        case 'deal':
+          return <Building2 className="w-5 h-5" />;
+        case 'conflict':
+          return <AlertTriangle className="w-5 h-5" />;
+        case 'opportunity':
+          return <Zap className="w-5 h-5" />;
+        default:
+          return <Building2 className="w-5 h-5" />;
+      }
     case 'danger':
       return <AlertTriangle className="w-5 h-5" />;
     default:
