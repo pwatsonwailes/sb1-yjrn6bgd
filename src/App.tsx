@@ -6,9 +6,16 @@ import { BoardView } from './components/views/BoardView';
 import { DeckManager } from './components/deck/DeckManager';
 import { EnergyCounter } from './components/EnergyCounter';
 import { ViewSelector, ViewType } from './components/navigation/ViewSelector';
+import { IntroScreen } from './components/intro/IntroScreen';
+import { StoryView } from './components/story/StoryView';
 import { useGameState } from './hooks/useGameState';
+import { useStory } from './hooks/useStory';
 import { Card as CardType } from './types/cards';
 import { allCards } from './data/cards';
+import { storyChapters } from './data/story/chapters';
+import { useTutorial } from './hooks/useTutorial';
+import { TutorialOverlay } from './components/tutorial/TutorialOverlay';
+import { TutorialHighlight } from './components/tutorial/TutorialHighlight';
 
 export function App() {
   const {
@@ -23,7 +30,10 @@ export function App() {
     purchaseCard
   } = useGameState();
 
+  const [gameStarted, setGameStarted] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('board');
+  const { storyState, getCurrentChapter, handleChoice, handleComplete } = useStory(storyChapters);
+  const { tutorialState, getCurrentStep, completeStep, skipTutorial } = useTutorial();
 
   const selectedEnergy = useMemo(() => {
     return gameState.hand
@@ -31,13 +41,63 @@ export function App() {
       .reduce((total, card) => total + card.cost.energy, 0);
   }, [gameState.hand, selectedCards]);
 
+  const handleTutorialAction = (action: { type: string; cardId?: string }) => {
+    switch (action.type) {
+      case 'select-card':
+        // Tutorial will complete when any card is selected
+        return;
+      case 'end-turn':
+        // Tutorial will complete when turn ends
+        return;
+      case 'view-factions':
+        setCurrentView('factions');
+        break;
+      case 'view-deck':
+        setCurrentView('deck');
+        break;
+    }
+  };
+
+  // Update card click handler
   const handleCardClick = (card: CardType) => {
     if (!selectedCards.has(card.id) && 
         selectedEnergy + card.cost.energy > gameState.energyPoints) {
       return;
     }
+    
     selectCard(card);
+    
+    // Check if this completes a tutorial step
+    const currentStep = getCurrentStep();
+    if (currentStep?.action?.type === 'select-card') {
+      completeStep(currentStep.id);
+    }
   };
+
+  // Update end turn handler
+  const handleEndTurn = async () => {
+    await endTurn();
+    
+    // Check if this completes a tutorial step
+    const currentStep = getCurrentStep();
+    if (currentStep?.action?.type === 'end-turn') {
+      completeStep(currentStep.id);
+    }
+  };
+
+  if (!gameStarted) {
+    return <IntroScreen onStartGame={() => setGameStarted(true)} />;
+  }
+
+  if (storyState.isPlaying) {
+    return (
+      <StoryView
+        chapter={getCurrentChapter()}
+        onChoice={handleChoice}
+        onComplete={handleComplete}
+      />
+    );
+  }
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -107,6 +167,19 @@ export function App() {
         maxEnergy={gameState.energyPoints}
         selectedEnergy={selectedEnergy}
       />
+
+      {tutorialState.isActive && getCurrentStep() && (
+        <>
+          <TutorialOverlay
+            step={getCurrentStep()!}
+            onComplete={completeStep}
+            onSkip={skipTutorial}
+          />
+          {getCurrentStep()?.highlight && (
+            <TutorialHighlight selector={getCurrentStep()!.highlight!} />
+          )}
+        </>
+      )}
     </div>
   );
 }

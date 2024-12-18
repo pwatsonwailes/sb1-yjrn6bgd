@@ -23,7 +23,7 @@ export const ResourceBar: React.FC<ResourceBarProps> = ({
   onFactionClick,
 }) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 p-4 bg-gray-800 text-white rounded-lg shadow-lg">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4 bg-gray-800 text-white rounded-lg shadow-lg">
       <ResourceItem
         Icon={CreditCard}
         value={credits}
@@ -52,13 +52,6 @@ export const ResourceBar: React.FC<ResourceBarProps> = ({
         value={stress}
         color="text-purple-400"
         tooltip="Stress - Mental strain from debt and dangerous actions"
-      />
-      
-      <ResourceItem
-        Icon={Zap}
-        value={energyPoints}
-        color="text-yellow-400"
-        tooltip="Energy Points - Available actions for this turn"
       />
 
       <ResourceItem

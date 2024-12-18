@@ -9,6 +9,7 @@ interface DeckCardProps {
   onRemove?: () => void;
   disabled?: boolean;
   cost?: number;
+  count?: number;
 }
 
 export const DeckCard: React.FC<DeckCardProps> = ({
@@ -16,7 +17,8 @@ export const DeckCard: React.FC<DeckCardProps> = ({
   onAdd,
   onRemove,
   disabled,
-  cost
+  cost,
+  count = 0
 }) => {
   return (
     <motion.div
@@ -44,6 +46,11 @@ export const DeckCard: React.FC<DeckCardProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <h4 className="font-medium text-white">{card.name}</h4>
+            {count > 0 && (
+              <span className="text-sm px-2 py-0.5 bg-gray-700 rounded-full text-gray-300">
+                x{count}
+              </span>
+            )}
             <span className={`text-xs px-2 py-0.5 rounded-full ${
               card.rarity === 'rare' ? 'bg-purple-600' :
               card.rarity === 'uncommon' ? 'bg-blue-600' :
@@ -73,7 +80,7 @@ export const DeckCard: React.FC<DeckCardProps> = ({
             <Plus size={16} className="text-white" />
           </button>
         )}
-        {onRemove && (
+        {onRemove && count > 0 && (
           <button
             onClick={onRemove}
             className="p-1 rounded-full bg-red-600 hover:bg-red-700"

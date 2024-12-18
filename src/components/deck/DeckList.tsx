@@ -30,6 +30,30 @@ export const DeckList: React.FC<DeckListProps> = ({
     onUpdateDeck(items);
   };
 
+  // Group cards by their base ID (without the unique suffix)
+  const groupedDeck = deck.reduce((acc, card) => {
+    const baseId = card.id.split('-')[0];
+    if (!acc[baseId]) {
+      acc[baseId] = {
+        card,
+        count: 1
+      };
+    } else {
+      acc[baseId].count++;
+    }
+    return acc;
+  }, {} as Record<string, { card: Card; count: number }>);
+
+  const removeCard = (cardToRemove: Card) => {
+    const baseId = cardToRemove.id.split('-')[0];
+    const newDeck = [...deck];
+    const indexToRemove = newDeck.findIndex(card => card.id.split('-')[0] === baseId);
+    if (indexToRemove !== -1) {
+      newDeck.splice(indexToRemove, 1);
+      onUpdateDeck(newDeck);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <div className="space-y-4">
@@ -42,8 +66,8 @@ export const DeckList: React.FC<DeckListProps> = ({
                 ref={provided.innerRef}
                 className="space-y-2"
               >
-                {deck.map((card, index) => (
-                  <Draggable key={card.id} draggableId={card.id} index={index}>
+                {Object.entries(groupedDeck).map(([baseId, { card, count }], index) => (
+                  <Draggable key={baseId} draggableId={baseId} index={index}>
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
@@ -52,10 +76,8 @@ export const DeckList: React.FC<DeckListProps> = ({
                       >
                         <DeckCard
                           card={card}
-                          onRemove={() => {
-                            const newDeck = deck.filter(c => c.id !== card.id);
-                            onUpdateDeck(newDeck);
-                          }}
+                          count={count}
+                          onRemove={() => removeCard(card)}
                         />
                       </div>
                     )}
@@ -74,18 +96,21 @@ export const DeckList: React.FC<DeckListProps> = ({
           {availableCards.map(card => {
             const cost = calculateCardCost(card);
             const canAfford = credits >= cost;
+            const currentCount = groupedDeck[card.id.split('-')[0]]?.count || 0;
+            const maxCards = 3; // Maximum copies of a card allowed in deck
             
             return (
               <DeckCard
                 key={card.id}
                 card={card}
                 cost={cost}
+                count={currentCount}
                 onAdd={() => {
-                  if (deck.length < 30 && canAfford) {
+                  if (deck.length < 30 && canAfford && currentCount < maxCards) {
                     onPurchaseCard(card, cost);
                   }
                 }}
-                disabled={deck.length >= 30 || !canAfford}
+                disabled={deck.length >= 30 || !canAfford || currentCount >= maxCards}
               />
             );
           })}
