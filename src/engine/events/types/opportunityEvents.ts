@@ -1,5 +1,5 @@
-import { Corporation, GameState } from '../../../types/game';
-import { CorporateEvent } from '../../../types/events';
+import { Faction } from '../../../types/game';
+import { FactionEvent } from '../../../types/events';
 import { generateEventId } from '../utils/eventUtils';
 
 const OPPORTUNITY_THRESHOLD = 0.8;
@@ -11,7 +11,7 @@ interface OpportunityConfig {
   reputationChange?: number;
 }
 
-const CORPORATION_OPPORTUNITIES: Record<string, OpportunityConfig> = {
+const FACTION_OPPORTUNITIES: Record<string, OpportunityConfig> = {
   megacorp: {
     message: 'MegaCorp offers a lucrative business deal',
     eventType: 'deal',
@@ -35,19 +35,19 @@ const CORPORATION_OPPORTUNITIES: Record<string, OpportunityConfig> = {
   }
 };
 
-export const checkForOpportunity = (corporation: Corporation, state: GameState): CorporateEvent | null => {
+export const checkForOpportunity = (faction: Faction): FactionEvent | null => {
   if (Math.random() <= OPPORTUNITY_THRESHOLD) return null;
 
-  const config = CORPORATION_OPPORTUNITIES[corporation.id];
+  const config = FACTION_OPPORTUNITIES[faction.id];
   if (!config) return null;
 
   return {
     id: generateEventId(),
-    type: 'corporate',
+    type: 'faction',
     message: config.message,
     timestamp: Date.now(),
     details: {
-      corporationId: corporation.id,
+      factionId: faction.id,
       eventType: config.eventType,
       ...(config.creditsChange && { creditsChange: config.creditsChange }),
       ...(config.reputationChange && { reputationChange: config.reputationChange })

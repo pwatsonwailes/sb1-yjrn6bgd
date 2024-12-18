@@ -1,23 +1,23 @@
-import { Corporation } from '../../../types/game';
-import { CorporateEvent } from '../../../types/events';
+import { Faction } from '../../../types/game';
+import { FactionEvent } from '../../../types/events';
 import { generateEventId } from '../utils/eventUtils';
 
 const REPUTATION_THRESHOLD = 50;
 
-export const checkForConflicts = (corporation: Corporation, corporations: Corporation[]): CorporateEvent[] => {
-  const conflicts: CorporateEvent[] = [];
+export const checkForConflicts = (faction: Faction, factions: Faction[]): FactionEvent[] => {
+  const conflicts: FactionEvent[] = [];
   
-  corporations.forEach(otherCorp => {
-    if (corporation.id === otherCorp.id) return;
+  factions.forEach(otherCorp => {
+    if (faction.id === otherCorp.id) return;
     
-    if (corporation.reputation > REPUTATION_THRESHOLD && otherCorp.reputation < -REPUTATION_THRESHOLD) {
+    if (faction.reputation > REPUTATION_THRESHOLD && otherCorp.reputation < -REPUTATION_THRESHOLD) {
       conflicts.push({
         id: generateEventId(),
-        type: 'corporate',
-        message: `Conflict erupts between ${corporation.name} and ${otherCorp.name}`,
+        type: 'faction',
+        message: `Conflict erupts between ${faction.name} and ${otherCorp.name}`,
         timestamp: Date.now(),
         details: {
-          corporationId: corporation.id,
+          factionId: faction.id,
           eventType: 'conflict',
           reputationChange: -5,
           stressChange: 1

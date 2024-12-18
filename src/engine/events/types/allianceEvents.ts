@@ -1,14 +1,14 @@
-import { Corporation } from '../../../types/game';
-import { CorporateEvent } from '../../../types/events';
+import { Faction } from '../../../types/game';
+import { FactionEvent } from '../../../types/events';
 import { generateEventId } from '../utils/eventUtils';
 
-export const generateAllianceEvent = (corporation: Corporation): CorporateEvent => ({
+export const generateAllianceEvent = (faction: Faction): FactionEvent => ({
   id: generateEventId(),
-  type: 'corporate',
-  message: `${corporation.name} offers a strategic alliance`,
+  type: 'faction',
+  message: `${faction.name} offers a strategic alliance`,
   timestamp: Date.now(),
   details: {
-    corporationId: corporation.id,
+    factionId: faction.id,
     eventType: 'opportunity',
     reputationChange: 10,
     creditsChange: 200

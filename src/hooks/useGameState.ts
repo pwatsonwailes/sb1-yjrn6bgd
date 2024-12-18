@@ -69,7 +69,7 @@ export const useGameState = () => {
     if (selectedCards.size === 0) return;
     
     const newState = await playSelectedCards();
-    const [finalState, newEvents] = endTurnAction(newState);
+    const [finalState, newEvents] = endTurnAction(newState, selectedCards);
     
     setSelectedCards(new Set());
     setPlayingCards(new Set());
@@ -140,6 +140,7 @@ export const useGameState = () => {
     drawCards,
     selectCard,
     endTurn,
+    handleCardEffect,
     updateFactionReputation,
     updateDeck,
     purchaseCard

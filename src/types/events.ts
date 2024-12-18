@@ -1,4 +1,4 @@
-export type EventType = 'success' | 'warning' | 'danger' | 'info' | 'market' | 'debt';
+export type EventType = 'success' | 'warning' | 'danger' | 'info' | 'market' | 'debt' | 'faction' | 'reputation';
 
 export interface GameEvent {
   id: string;
@@ -28,16 +28,27 @@ export interface DebtEvent extends GameEvent {
   };
 }
 
+export interface FactionEvent extends GameEvent {
+  type: 'faction';
+  details: {
+    factionId: string;
+    eventType: 'deal' | 'conflict' | 'opportunity' | 'warning';
+    reputationChange?: number;
+    creditsChange?: number;
+    stressChange?: number;
+  };
+}
+
 export interface ReputationEvent extends GameEvent {
-    type: 'reputation';
-    details: {
+  type: 'reputation';
+  details: {
+    factionId: string;
+    oldReputation: number;
+    newReputation: number;
+    change: number;
+    relatedChanges?: Array<{
       factionId: string;
-      oldReputation: number;
-      newReputation: number;
       change: number;
-      relatedChanges?: Array<{
-        factionId: string;
-        change: number;
-      }>;
-    };
-  }
+    }>;
+  };
+}

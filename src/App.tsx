@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Card } from './components/Card';
 import { ResourceBar } from './components/ResourceBar';
 import { EventLog } from './components/EventLog';
@@ -45,7 +45,7 @@ export function App() {
         <ResourceBar
           credits={gameState.credits}
           condition={gameState.condition}
-          corporations={gameState.corporations}
+          factions={gameState.factions}
           stress={gameState.stress}
           energyPoints={gameState.energyPoints}
           debt={gameState.debt}

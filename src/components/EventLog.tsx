@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, TrendingUp, CreditCard, Shield, Building2, Zap } from 'lucide-react';
-import { GameEvent, CorporateEvent } from '../types/events';
+import { GameEvent, FactionEvent } from '../types/events';
 
 interface EventLogProps {
   events: GameEvent[];
@@ -15,9 +15,9 @@ const getEventIcon = (event: GameEvent) => {
       return <CreditCard className="w-5 h-5" />;
     case 'reputation':
       return <Shield className="w-5 h-5" />;
-    case 'corporate':
-      const corporateEvent = event as CorporateEvent;
-      switch (corporateEvent.details.eventType) {
+    case 'faction':
+      const factionEvent = event as FactionEvent;
+      switch (factionEvent.details.eventType) {
         case 'deal':
           return <Building2 className="w-5 h-5" />;
         case 'conflict':

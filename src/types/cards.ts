@@ -7,7 +7,7 @@ export interface CardEffect {
   value: number;
   chance?: number;
   duration?: number;
-  corporationId?: string;
+  factionId?: string;
 }
 
 export interface CardPenalty {

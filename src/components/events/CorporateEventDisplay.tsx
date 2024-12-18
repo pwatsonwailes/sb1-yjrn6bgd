@@ -1,12 +1,12 @@
 import React from 'react';
 import { Building2, AlertTriangle, Zap } from 'lucide-react';
-import { CorporateEvent } from '../../types/events';
+import { FactionEvent } from '../../types/events';
 
-interface CorporateEventDisplayProps {
-  event: CorporateEvent;
+interface FactionEventDisplayProps {
+  event: FactionEvent;
 }
 
-const getEventIcon = (eventType: CorporateEvent['details']['eventType']) => {
+const getEventIcon = (eventType: FactionEvent['details']['eventType']) => {
   switch (eventType) {
     case 'deal':
       return <Building2 className="w-5 h-5" />;
@@ -18,7 +18,7 @@ const getEventIcon = (eventType: CorporateEvent['details']['eventType']) => {
   }
 };
 
-const getEventColor = (eventType: CorporateEvent['details']['eventType']) => {
+const getEventColor = (eventType: FactionEvent['details']['eventType']) => {
   switch (eventType) {
     case 'deal':
       return 'bg-green-600';
@@ -31,7 +31,7 @@ const getEventColor = (eventType: CorporateEvent['details']['eventType']) => {
   }
 };
 
-export const CorporateEventDisplay: React.FC<CorporateEventDisplayProps> = ({ event }) => {
+export const FactionEventDisplay: React.FC<FactionEventDisplayProps> = ({ event }) => {
   const { eventType } = event.details;
   
   return (

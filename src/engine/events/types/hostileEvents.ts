@@ -1,14 +1,14 @@
-import { Corporation } from '../../../types/game';
-import { CorporateEvent } from '../../../types/events';
+import { Faction } from '../../../types/game';
+import { FactionEvent } from '../../../types/events';
 import { generateEventId } from '../utils/eventUtils';
 
-export const generateHostileEvent = (corporation: Corporation): CorporateEvent => ({
+export const generateHostileEvent = (faction: Faction): FactionEvent => ({
   id: generateEventId(),
-  type: 'corporate',
-  message: `${corporation.name} issues a hostile warning`,
+  type: 'faction',
+  message: `${faction.name} issues a hostile warning`,
   timestamp: Date.now(),
   details: {
-    corporationId: corporation.id,
+    factionId: faction.id,
     eventType: 'warning',
     stressChange: 2
   }
