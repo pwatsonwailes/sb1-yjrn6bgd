@@ -67,5 +67,47 @@ export const megacorpCards: Card[] = [
       { type: 'condition', value: 20 },
       { type: 'reputation', value: 10, factionId: 'megacorp' }
     ]
+  },
+  {
+    id: 'corporate-merger',
+    name: 'Corporate Merger',
+    type: 'operation',
+    rarity: 'rare',
+    description: 'Orchestrate a complex corporate merger over multiple turns.',
+    flavor: 'The bigger they are, the more credits they have.',
+    cost: {
+      energy: 4,
+      credits: 400,
+      turns: 4,
+      perTurn: {
+        energy: 1,
+        credits: 100
+      }
+    },
+    effects: [
+      { type: 'credits', value: 2500 },
+      { type: 'reputation', value: 25, factionId: 'megacorp' },
+      { type: 'reputation', value: -15, factionId: 'cybertech' }
+    ]
+  },
+  {
+    id: 'market-domination',
+    name: 'Market Domination',
+    type: 'operation',
+    rarity: 'rare',
+    description: 'Execute a long-term strategy to dominate market sectors.',
+    flavor: 'First we take Manhattan, then we take Berlin.',
+    cost: {
+      energy: 3,
+      credits: 600,
+      turns: 5,
+      perTurn: {
+        credits: 150
+      }
+    },
+    effects: [
+      { type: 'credits', value: 3000 },
+      { type: 'reputation', value: 35, factionId: 'megacorp' }
+    ]
   }
 ];

@@ -1,4 +1,6 @@
+import { useState, useCallback } from 'react';
 import { StoryState, StoryChapter } from '../types/story';
+import { checkNodeRequirements } from '../utils/story';
 
 export const useStory = (chapters: StoryChapter[]) => {
   const [storyState, setStoryState] = useState<StoryState>({
@@ -8,9 +10,23 @@ export const useStory = (chapters: StoryChapter[]) => {
     isPlaying: true
   });
 
-  const getCurrentChapter = () => chapters[storyState.currentChapter];
+  const getCurrentChapter = useCallback(() => {
+    const chapter = chapters[storyState.currentChapter];
+    if (!chapter) return null;
 
-  const handleChoice = (choiceId: string, picked: number) => {
+    // Filter nodes based on requirements
+    const validNodes = chapter.nodes.filter(node => 
+      checkNodeRequirements(node, storyState.choices)
+    );
+
+    return {
+      ...chapter,
+      nodes: validNodes
+    };
+  }, [chapters, storyState.currentChapter, storyState.choices]);
+
+  const handleChoice = useCallback((choiceId: string, picked: number) => {
+    console.log('Choice made:', { choiceId, picked }); // Debug log
     setStoryState(prev => ({
       ...prev,
       choices: {
@@ -18,14 +34,14 @@ export const useStory = (chapters: StoryChapter[]) => {
         [choiceId]: picked
       }
     }));
-  };
+  }, []);
 
-  const handleComplete = () => {
+  const handleComplete = useCallback(() => {
     setStoryState(prev => ({
       ...prev,
       isPlaying: false
     }));
-  };
+  }, []);
 
   return {
     storyState,

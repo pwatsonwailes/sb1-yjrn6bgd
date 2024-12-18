@@ -1,4 +1,6 @@
-export type CardType = 'action' | 'bodyMod' | 'event' | 'debt' | 'subscription';
+import { Faction } from './factions';
+
+export type CardType = 'action' | 'bodyMod' | 'event' | 'debt' | 'subscription' | 'operation';
 export type EffectType = 'credits' | 'condition' | 'reputation' | 'stress' | 'draw' | 'energy';
 export type CardRarity = 'starter' | 'common' | 'uncommon' | 'rare';
 
@@ -10,6 +12,13 @@ export interface CardEffect {
   factionId?: string;
 }
 
+export interface CardProgress {
+  turnsRequired: number;
+  turnsSpent: number;
+  energyInvested: number;
+  creditsInvested: number;
+}
+
 export interface CardPenalty {
   type: EffectType;
   value: number;
@@ -19,6 +28,11 @@ export interface CardPenalty {
 export interface CardCost {
   energy: number;
   credits?: number;
+  turns?: number; // Number of turns required to complete
+  perTurn?: {
+    energy?: number;
+    credits?: number;
+  };
 }
 
 export interface Card {
@@ -33,4 +47,5 @@ export interface Card {
   mandatory?: boolean;
   penalty?: CardPenalty;
   image?: string;
+  progress?: CardProgress;
 }

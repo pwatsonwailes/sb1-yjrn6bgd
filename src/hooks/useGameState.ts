@@ -8,6 +8,7 @@ import { drawCards as drawCardsAction } from '../engine/actions/drawCards';
 import { endTurn as endTurnAction } from '../engine/actions/endTurn';
 import { useFactions } from './useFactions';
 import { useEvents } from './useEvents';
+import { useGoals } from './useGoals';
 
 export const useGameState = () => {
   const [gameState, setGameState] = useState<GameState>(getInitialState());
@@ -15,6 +16,12 @@ export const useGameState = () => {
   const [playingCards, setPlayingCards] = useState<Set<string>>(new Set());
   const { factions, updateFactionReputation } = useFactions();
   const { events, addEvent } = useEvents();
+  const { 
+    goals, 
+    investInGoal, 
+    updateGoalTimers, 
+    activateGoal 
+  } = useGoals(factions.map(f => f.id));
 
   const drawCards = useCallback((count: number) => {
     setGameState(state => drawCardsAction(state, count));
@@ -121,18 +128,68 @@ export const useGameState = () => {
     });
   }, [addEvent]);
 
+  const handleGoalInvestment = useCallback((
+    goalId: string,
+    type: 'credits' | 'energy',
+    amount: number
+  ) => {
+    setGameState(current => {
+      const resourceKey = type === 'credits' ? 'credits' : 'energyPoints';
+      if (current[resourceKey] < amount) return current;
+
+      investInGoal(goalId, type, amount);
+      
+      return {
+        ...current,
+        [resourceKey]: current[resourceKey] - amount
+      };
+    });
+  }, [investInGoal]);
+
+  const handleGoalActivation = useCallback((goalId: string) => {
+    activateGoal(goalId);
+    addEvent({
+      message: 'New goal activated',
+      type: 'info'
+    });
+  }, [activateGoal, addEvent]);
+
+  const endTurn = useCallback(async () => {
+    if (selectedCards.size === 0) return;
+    
+    const newState = await playSelectedCards();
+    const [finalState, newEvents] = endTurnAction(newState, selectedCards);
+    
+    // Update goal timers
+    updateGoalTimers();
+    
+    setSelectedCards(new Set());
+    setPlayingCards(new Set());
+    setGameState(finalState);
+    
+    newEvents.forEach(addEvent);
+    
+    addEvent({
+      message: `Turn ${finalState.turn} started`,
+      type: 'info'
+    });
+  }, [playSelectedCards, addEvent, updateGoalTimers]);
+
   return {
     gameState,
     selectedCards,
     playingCards,
     events,
     factions,
+    goals,
     drawCards,
     selectCard,
     endTurn,
     handleCardEffect,
     updateFactionReputation,
     updateDeck,
-    purchaseCard
+    purchaseCard,
+    handleGoalInvestment,
+    handleGoalActivation
   };
 };

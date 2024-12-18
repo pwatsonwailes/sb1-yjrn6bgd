@@ -4,10 +4,12 @@ import { StoryNode } from '../../../types/story';
 
 interface ChoiceNodeProps {
   node: StoryNode;
-  onChoice: (picked: number) => void;
+  onChoice: (choiceId: string, picked: number) => void;
 }
 
 export const ChoiceNode: React.FC<ChoiceNodeProps> = ({ node, onChoice }) => {
+  if (!node.id || !node.options) return null;
+
   return (
     <div className="max-w-2xl w-full">
       {node.media?.character && (
@@ -30,13 +32,13 @@ export const ChoiceNode: React.FC<ChoiceNodeProps> = ({ node, onChoice }) => {
       <p className="text-white text-lg mb-8">{node.text}</p>
 
       <div className="space-y-3">
-        {node.options?.map((option, index) => (
+        {node.options.map((option, index) => (
           <motion.button
             key={option.picked}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
-            onClick={() => onChoice(option.picked)}
+            onClick={() => onChoice(node.id!, option.picked)}
             className="w-full p-4 bg-gray-800 hover:bg-gray-700 rounded-lg text-white text-left transition-colors"
           >
             {option.text}

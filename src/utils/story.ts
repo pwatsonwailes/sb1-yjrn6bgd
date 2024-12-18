@@ -11,7 +11,8 @@ export const checkNodeRequirements = (
 
     switch (req.type) {
       case 'choice':
-        return choices[req.choiceId] === req.optionId;
+        const userChoice = choices[req.choiceId];
+        return userChoice === req.optionId;
       default:
         return true;
     }

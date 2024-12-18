@@ -1,7 +1,7 @@
 import React from 'react';
-import { LayoutGrid, Users, Library } from 'lucide-react';
+import { LayoutGrid, Users, Library, Target } from 'lucide-react';
 
-export type ViewType = 'board' | 'factions' | 'deck';
+export type ViewType = 'board' | 'factions' | 'deck' | 'goals';
 
 interface ViewSelectorProps {
   currentView: ViewType;
@@ -16,6 +16,7 @@ export const ViewSelector: React.FC<ViewSelectorProps> = ({
     { id: 'board', label: 'Board', icon: LayoutGrid },
     { id: 'factions', label: 'Factions', icon: Users },
     { id: 'deck', label: 'Deck', icon: Library },
+    { id: 'goals', label: 'Goals', icon: Target },
   ] as const;
 
   return (
@@ -23,7 +24,7 @@ export const ViewSelector: React.FC<ViewSelectorProps> = ({
       {views.map(view => (
         <button
           key={view.id}
-          onClick={() => onViewChange(view.id)}
+          onClick={() => onViewChange(view.id as ViewType)}
           className={`
             flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
             ${currentView === view.id

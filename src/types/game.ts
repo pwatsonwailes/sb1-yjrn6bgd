@@ -1,6 +1,7 @@
 import { Faction } from './factions';
 import { Card } from './cards';
 import { MarketPricesState } from '../engine/market/types';
+import { Goal } from './goals';
 
 export interface GameState {
   credits: number;
@@ -15,6 +16,7 @@ export interface GameState {
   debt: number;
   debtPaymentDue: number;
   marketState: MarketPricesState;
+  goals: Goal[];
 }
 
 export interface MarketState {
@@ -30,3 +32,4 @@ export interface MarketState {
 export * from './cards';
 export * from './factions';
 export * from './events';
+export * from './goals';

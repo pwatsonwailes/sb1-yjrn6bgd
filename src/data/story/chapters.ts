@@ -36,7 +36,7 @@ export const storyChapters: StoryChapter[] = [
 						},
 						{
 							src: "black",
-							"caption": "",
+							"caption": "Image 4",
 							"displayDuration": 1600,
 							"transitionDuration": 500
 						}

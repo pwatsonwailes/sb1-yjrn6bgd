@@ -16,6 +16,8 @@ import { storyChapters } from './data/story/chapters';
 import { useTutorial } from './hooks/useTutorial';
 import { TutorialOverlay } from './components/tutorial/TutorialOverlay';
 import { TutorialHighlight } from './components/tutorial/TutorialHighlight';
+import { GoalsView } from './components/goals/GoalsView';
+
 
 export function App() {
   const {
@@ -133,6 +135,17 @@ export function App() {
             onUpdateDeck={updateDeck}
             credits={gameState.credits}
             onPurchaseCard={purchaseCard}
+          />
+        );
+      case 'goals':
+        return (
+          <GoalsView
+            goals={gameState.goals}
+            onActivateGoal={handleGoalActivation}
+            onInvestInGoal={handleGoalInvestment}
+            credits={gameState.credits}
+            energy={gameState.energyPoints}
+            factions={factions}
           />
         );
     }

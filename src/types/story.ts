@@ -1,5 +1,11 @@
 export type StoryNodeType = 'gallery' | 'paragraph' | 'choice' | 'button';
 
+export interface StoryRequirement {
+  type: 'choice';
+  choiceId: string; // Standardize to camelCase
+  optionId: number;
+}
+
 export interface StoryMedia {
   images?: {
     src: string;
@@ -29,6 +35,7 @@ export interface StoryNode {
   options?: { picked: number; text: string }[];
   mode?: 'cards';
   id?: string;
+  requirements?: StoryRequirement[];
 }
 
 export interface StoryChapter {
