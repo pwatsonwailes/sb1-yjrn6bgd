@@ -1,7 +1,6 @@
 import React from 'react';
-import { CreditCard, Heart, Zap, Brain, Coins } from 'lucide-react';
+import { CreditCard, Heart, Zap, Brain, Coins, Users } from 'lucide-react';
 import { ResourceItem } from './ResourceItem';
-import { ReputationDropdown } from './ReputationDropdown';
 import { Faction } from '../types/game';
 
 interface ResourceBarProps {
@@ -11,6 +10,7 @@ interface ResourceBarProps {
   stress: number;
   energyPoints: number;
   debt: number;
+  onFactionClick: () => void;
 }
 
 export const ResourceBar: React.FC<ResourceBarProps> = ({
@@ -20,6 +20,7 @@ export const ResourceBar: React.FC<ResourceBarProps> = ({
   stress,
   energyPoints,
   debt,
+  onFactionClick,
 }) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 p-4 bg-gray-800 text-white rounded-lg shadow-lg">
@@ -38,9 +39,13 @@ export const ResourceBar: React.FC<ResourceBarProps> = ({
         suffix="%"
       />
       
-      <div className="flex items-center gap-2">
-        <ReputationDropdown factions={factions} />
-      </div>
+      <button
+        onClick={onFactionClick}
+        className="flex items-center gap-2 hover:bg-gray-700 p-2 rounded transition-colors"
+      >
+        <Users className="w-5 h-5 text-blue-400" />
+        <span>Factions</span>
+      </button>
       
       <ResourceItem
         Icon={Brain}
