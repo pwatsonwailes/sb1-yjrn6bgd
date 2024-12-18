@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { StoryState, StoryChapter } from '../types/story';
-import { checkNodeRequirements } from '../utils/story';
+import { findNextValidNode } from '../utils/story/nodes';
+import { getNextState } from '../utils/story/state';
 
 export const useStory = (chapters: StoryChapter[]) => {
   const [storyState, setStoryState] = useState<StoryState>({
@@ -14,33 +15,41 @@ export const useStory = (chapters: StoryChapter[]) => {
     const chapter = chapters[storyState.currentChapter];
     if (!chapter) return null;
 
-    // Filter nodes based on requirements
-    const validNodes = chapter.nodes.filter(node => 
-      checkNodeRequirements(node, storyState.choices)
+    // Find the current valid node
+    const currentValid = findNextValidNode(
+      chapter.nodes,
+      storyState.currentNode,
+      storyState.choices
     );
 
+    if (!currentValid) return null;
+
+    // Return chapter with only the current valid node
     return {
       ...chapter,
-      nodes: validNodes
+      nodes: [currentValid.node]
     };
-  }, [chapters, storyState.currentChapter, storyState.choices]);
+  }, [chapters, storyState.currentChapter, storyState.currentNode, storyState.choices]);
 
   const handleChoice = useCallback((choiceId: string, picked: number) => {
-    setStoryState(prev => ({
-      ...prev,
-      choices: {
-        ...prev.choices,
-        [choiceId]: picked
-      }
-    }));
-  }, []);
+    setStoryState(prev => {
+      // First update choices
+      const newState = {
+        ...prev,
+        choices: {
+          ...prev.choices,
+          [choiceId]: picked
+        }
+      };
+      
+      // Then calculate the next state based on the new choices
+      return getNextState(newState, chapters, 'choice');
+    });
+  }, [chapters]);
 
   const handleComplete = useCallback(() => {
-    setStoryState(prev => ({
-      ...prev,
-      isPlaying: false
-    }));
-  }, []);
+    setStoryState(prev => getNextState(prev, chapters, 'complete'));
+  }, [chapters]);
 
   return {
     storyState,

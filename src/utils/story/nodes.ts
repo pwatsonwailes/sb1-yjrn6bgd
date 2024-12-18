@@ -1,4 +1,4 @@
-import { StoryNode } from '../types/story';
+import { StoryNode } from '../../types/story';
 
 export const checkNodeRequirements = (
   node: StoryNode,
@@ -12,10 +12,22 @@ export const checkNodeRequirements = (
     switch (req.type) {
       case 'choice':
         const userChoice = choices[req.choiceId];
-        // Only match if the exact choice was made
         return userChoice === req.optionId;
       default:
         return true;
     }
   });
+};
+
+export const findNextValidNode = (
+  nodes: StoryNode[],
+  startIndex: number,
+  choices: Record<string, number>
+): { node: StoryNode; index: number } | null => {
+  for (let i = startIndex; i < nodes.length; i++) {
+    if (checkNodeRequirements(nodes[i], choices)) {
+      return { node: nodes[i], index: i };
+    }
+  }
+  return null;
 };
