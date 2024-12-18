@@ -2,12 +2,12 @@ import React from 'react';
 import { CreditCard, Heart, Zap, Brain, Coins } from 'lucide-react';
 import { ResourceItem } from './ResourceItem';
 import { ReputationDropdown } from './ReputationDropdown';
-import { Corporation } from '../types/game';
+import { Faction } from '../types/game';
 
 interface ResourceBarProps {
   credits: number;
   condition: number;
-  corporations: Corporation[];
+  factions: Faction[];
   stress: number;
   energyPoints: number;
   debt: number;
@@ -16,7 +16,7 @@ interface ResourceBarProps {
 export const ResourceBar: React.FC<ResourceBarProps> = ({
   credits,
   condition,
-  corporations,
+  factions,
   stress,
   energyPoints,
   debt,
@@ -39,7 +39,7 @@ export const ResourceBar: React.FC<ResourceBarProps> = ({
       />
       
       <div className="flex items-center gap-2">
-        <ReputationDropdown corporations={corporations} />
+        <ReputationDropdown factions={factions} />
       </div>
       
       <ResourceItem

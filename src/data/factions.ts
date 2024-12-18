@@ -1,6 +1,6 @@
-import { Corporation } from '../types/game';
+import { Faction } from '../types/game';
 
-export const corporations: Corporation[] = [
+export const factions: Faction[] = [
   {
     id: 'megacorp',
     name: 'MegaCorp Industries',

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { Award, ChevronDown } from 'lucide-react';
-import { Corporation } from '../types/game';
+import { Faction } from '../types/game';
 import { Tooltip } from './Tooltip';
 
 interface ReputationDropdownProps {
-  corporations: Corporation[];
+  factions: Faction[];
 }
 
-export const ReputationDropdown: React.FC<ReputationDropdownProps> = ({ corporations }) => {
+export const ReputationDropdown: React.FC<ReputationDropdownProps> = ({ factions }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="relative">
-      <Tooltip content="Corporation Reputations - Your standing with various corporations">
+      <Tooltip content="Faction Reputations - Your standing with various factions">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-2 cursor-help"
@@ -24,7 +24,7 @@ export const ReputationDropdown: React.FC<ReputationDropdownProps> = ({ corporat
 
       {isOpen && (
         <div className="absolute top-full left-0 mt-2 w-64 bg-gray-900 rounded-lg shadow-xl z-50 p-2">
-          {corporations.map(corp => (
+          {factions.map(corp => (
             <div
               key={corp.id}
               className="p-2 hover:bg-gray-800 rounded-md transition-colors"

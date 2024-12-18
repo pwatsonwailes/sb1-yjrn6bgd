@@ -1,6 +1,6 @@
 import { GameState, MarketState } from '../types/game';
 import { getStarterDeck } from './cards';
-import { corporations } from './corporations';
+import { factions } from './factions';
 import { shuffleArray } from '../utils/array';
 
 const getInitialMarketState = (): MarketState => ({
@@ -21,7 +21,7 @@ export const getInitialState = (): GameState => {
     // Starting Resources
     credits: 500,
     condition: 80,
-    corporations: corporations,
+    factions: factions,
     stress: 0,
     energyPoints: 5,
     

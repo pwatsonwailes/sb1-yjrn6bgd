@@ -1,6 +1,6 @@
 import { GameState } from '../../types/game';
 import { MarketEvent } from '../../types/events';
-import { ResourcePrice, MarketTrend } from './types';
+import { ResourcePrice } from './types';
 import { applyModifiers, updateModifiers } from './modifiers';
 import { generateNewTrend, applyTrend } from './trends';
 import { applyVolatility } from './volatility';
@@ -30,7 +30,7 @@ export const updateMarketPrices = (state: GameState): [GameState, MarketEvent[]]
     updatedPrice = applyVolatility(updatedPrice);
     
     // Apply faction modifiers
-    state.corporations.forEach(faction => {
+    state.factions.forEach(faction => {
       const modifier = ReputationManager.getReputationModifier(faction);
       if (modifier !== 0) {
         updatedPrice.modifiers.push({

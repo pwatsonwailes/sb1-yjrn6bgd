@@ -1,4 +1,4 @@
-import { MarketModifier, ResourcePrice } from './types';
+import { ResourcePrice } from './types';
 
 export const applyModifiers = (price: ResourcePrice): number => {
   let finalPrice = price.base;
