@@ -22,7 +22,29 @@ export const generateRandomCard = (): Card => {
     targetRarity = 'starter';
   }
   
-  const possibleCards = allCards.filter(card => card.rarity === targetRarity);
+  // Filter cards by target rarity
+  let possibleCards = allCards.filter(card => card.rarity === targetRarity);
+  
+  // If no cards of target rarity, fallback to all cards
+  if (possibleCards.length === 0) {
+    possibleCards = allCards;
+  }
+  
+  // Ensure we have at least one card
+  if (possibleCards.length === 0) {
+    // Provide a fallback basic card if somehow no cards are available
+    return {
+      id: `basic-card-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      name: 'Basic Action',
+      type: 'action',
+      rarity: 'starter',
+      description: 'A basic action card.',
+      flavor: 'When all else fails, keep it simple.',
+      cost: { energy: 1 },
+      effects: [{ type: 'credits', value: 50 }]
+    };
+  }
+  
   const randomCard = possibleCards[Math.floor(Math.random() * possibleCards.length)];
   
   // Create a new instance of the card with a unique ID
