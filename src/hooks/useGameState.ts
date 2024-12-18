@@ -1,31 +1,20 @@
 import { useState, useCallback } from 'react';
 import { Card, GameState } from '../types/game';
-import { CardCost } from '../types/cards';
+import { CardEffect, CardCost } from '../types/cards';
+import { GameEvent } from '../types/events';
 import { getInitialState } from '../data/initialState';
 import { playCard as playCardAction } from '../engine/actions/playCard';
 import { drawCards as drawCardsAction } from '../engine/actions/drawCards';
 import { endTurn as endTurnAction } from '../engine/actions/endTurn';
-import { GameEvent } from '../types/events';
 import { useFactions } from './useFactions';
+import { useEvents } from './useEvents';
 
 export const useGameState = () => {
   const [gameState, setGameState] = useState<GameState>(getInitialState());
   const [selectedCards, setSelectedCards] = useState<Set<string>>(new Set());
   const [playingCards, setPlayingCards] = useState<Set<string>>(new Set());
-  const [events, setEvents] = useState<GameEvent[]>([]);
   const { factions, updateFactionReputation } = useFactions();
-
-  const addEvent = useCallback((event: Omit<GameEvent, 'id' | 'timestamp'>) => {
-    const newEvent = {
-      ...event,
-      id: Math.random().toString(36).substr(2, 9),
-      timestamp: Date.now()
-    };
-    setEvents(current => [...current, newEvent]);
-    setTimeout(() => {
-      setEvents(current => current.filter(e => e.id !== newEvent.id));
-    }, event.type === 'market' ? 5000 : 3000);
-  }, []);
+  const { events, addEvent } = useEvents();
 
   const drawCards = useCallback((count: number) => {
     setGameState(state => drawCardsAction(state, count));
@@ -118,7 +107,7 @@ export const useGameState = () => {
   }, [addEvent]);
 
   const purchaseCard = useCallback((card: Card, cost: CardCost) => {
-    const creditCost = cost.credits ? cost.credits : 0
+    const creditCost = cost.credits ? cost.credits : 0;
 
     setGameState(current => ({
       ...current,

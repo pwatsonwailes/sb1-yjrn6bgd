@@ -1,16 +1,8 @@
-import { GameState, MarketState } from '../types/game';
+import { GameState } from '../types/game';
 import { getStarterDeck } from './cards';
 import { factions } from './factions';
 import { shuffleArray } from '../utils/array';
-
-const getInitialMarketState = (): MarketState => ({
-  resourcePrices: {
-    ore: Math.floor(Math.random() * 20) + 90, // 90-110 base price
-    tech: Math.floor(Math.random() * 30) + 185, // 185-215 base price
-    data: Math.floor(Math.random() * 25) + 135, // 135-160 base price
-  },
-  priceMultiplier: 1.0,
-});
+import { createInitialMarketState } from '../engine/market/initialState';
 
 export const getInitialState = (): GameState => {
   const starterDeck = shuffleArray(getStarterDeck());
@@ -38,6 +30,6 @@ export const getInitialState = (): GameState => {
     debtPaymentDue: 3, // Payment due in 3 turns
     
     // Market State
-    marketState: getInitialMarketState(),
+    marketState: createInitialMarketState(),
   };
 };
