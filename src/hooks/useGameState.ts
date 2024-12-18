@@ -62,24 +62,6 @@ export const useGameState = () => {
     return newState;
   }, [gameState, selectedCards, addEvent]);
 
-  const endTurn = useCallback(async () => {
-    if (selectedCards.size === 0) return;
-    
-    const newState = await playSelectedCards();
-    const [finalState, newEvents] = endTurnAction(newState, selectedCards);
-    
-    setSelectedCards(new Set());
-    setPlayingCards(new Set());
-    setGameState(finalState);
-    
-    newEvents.forEach(addEvent);
-    
-    addEvent({
-      message: `Turn ${finalState.turn} started`,
-      type: 'info'
-    });
-  }, [playSelectedCards, addEvent]);
-
   const handleCardEffect = useCallback((effect: CardEffect) => {
     if (effect.type === 'reputation' && effect.factionId) {
       const faction = factions.find(f => f.id === effect.factionId);
