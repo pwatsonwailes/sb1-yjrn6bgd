@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { Shield, History, CreditCard, TrendingUp, Building2, ArrowLeft } from 'lucide-react';
+import { History, CreditCard, TrendingUp, Building2 } from 'lucide-react';
 import { Faction } from '../../types/factions';
 import { FactionDetails } from '../factions/FactionDetails';
 import { FactionCards } from '../factions/FactionCards';
 import { FactionHistory } from '../factions/FactionHistory';
 import { FactionRelations } from '../factions/FactionRelations';
-import { ResourceBar } from '../ResourceBar';
 import { Card } from '../../types/cards';
 
 interface FactionsViewProps {
   factions: Faction[];
   credits: number;
   onPurchaseCard: (card: Card, cost: number) => void;
-  onBack: () => void;
   gameState: {
     credits: number;
     condition: number;
@@ -29,7 +27,6 @@ export const FactionsView: React.FC<FactionsViewProps> = ({
   factions,
   credits,
   onPurchaseCard,
-  onBack,
   gameState,
 }) => {
   const [selectedFaction, setSelectedFaction] = useState<Faction | null>(factions[0]);

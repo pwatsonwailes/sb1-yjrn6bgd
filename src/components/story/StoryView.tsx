@@ -11,11 +11,10 @@ import { useAudio } from '../../utils/audio';
 
 interface StoryViewProps {
   storyState: StoryState;
-  getCurrentNode?;
-  onComplete?;
-  onNext?;
+  getCurrentNode?: any;
+  onComplete?: any;
+  onNext?: any;
   onChoice: (choiceId: string, picked: number) => void;
-  choices: Record<string, number>;
 }
 
 export const StoryView: React.FC<StoryViewProps> = ({

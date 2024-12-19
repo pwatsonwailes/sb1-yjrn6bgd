@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Card, GameState } from '../types/game';
-import { CardEffect, CardCost } from '../types/cards';
-import { GameEvent } from '../types/events';
+import { CardEffect } from '../types/cards';
 import { getInitialState } from '../data/initialState';
 import { playCard as playCardAction } from '../engine/actions/playCard';
 import { drawCards as drawCardsAction } from '../engine/actions/drawCards';
@@ -95,8 +94,8 @@ export const useGameState = () => {
     });
   }, [addEvent]);
 
-  const purchaseCard = useCallback((card: Card, cost: CardCost) => {
-    const creditCost = cost.credits ? cost.credits : 0;
+  const purchaseCard = useCallback((card: Card, cost: number) => {
+    const creditCost = cost ? cost : 0;
 
     setGameState(current => ({
       ...current,

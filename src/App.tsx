@@ -36,7 +36,7 @@ export function App() {
 
   const [gameStarted, setGameStarted] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('board');
-  const { storyState, getCurrentChapter, getCurrentNode, handleChoice, handleComplete, handleNext } = useStory(storyChapters);
+  const { storyState, getCurrentNode, handleChoice, handleComplete, handleNext } = useStory(storyChapters);
   const { tutorialState, getCurrentStep, completeStep, skipTutorial } = useTutorial();
 
   const selectedEnergy = useMemo(() => {
