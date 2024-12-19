@@ -5,20 +5,21 @@ import { getNextState } from '../utils/story/state';
 
 export const useStory = (chapters: StoryChapter[]) => {
   const [storyState, setStoryState] = useState<StoryState>({
-    currentChapter: 0,
-    currentNode: 0,
+    currentChapterIndex: 0,
+    currentNodeIndex: 0,
     choices: {},
     isPlaying: true
   });
 
   const getCurrentChapter = useCallback(() => {
-    const chapter = chapters[storyState.currentChapter];
+    const chapter = chapters[storyState.currentChapterIndex];
+
     if (!chapter) return null;
 
     // Find the current valid node
     const currentValid = findNextValidNode(
       chapter.nodes,
-      storyState.currentNode,
+      storyState.currentNodeIndex,
       storyState.choices
     );
 
@@ -29,19 +30,26 @@ export const useStory = (chapters: StoryChapter[]) => {
       ...chapter,
       nodeIndex: currentValid.index
     };
-  }, [chapters, storyState.currentChapter, storyState.currentNode, storyState.choices]);
+  }, [chapters, storyState.currentChapterIndex, storyState.currentNodeIndex, storyState.choices]);
+
+  const getCurrentNode = useCallback(() => {
+    const chapter = chapters[storyState.currentChapterIndex];
+
+    if (!chapter) return null;
+
+    // Find the current valid node
+    const currentValid = findNextValidNode(
+      chapter.nodes,
+      storyState.currentNodeIndex,
+      storyState.choices
+    );
+
+    return currentValid ? currentValid.node : null;
+  }, [chapters, storyState.currentChapterIndex, storyState.currentNodeIndex, storyState.choices]);
 
   const handleNext = () => {
-    const chapter = chapters[storyState.currentChapter];
-
-    for (let index = storyState.currentNode; index < chapter.nodes.length - 1; index++) {
-      if (findNextValidNode(chapter.nodes, index, storyState.choices)) {
-        setStoryState(prev => getNextState(prev, chapters, 'next'));
-        return
-      }
-    }
-
-    return false
+    console.log('handling progression')
+    setStoryState(prev => getNextState(prev, chapters, 'next'));
   };
 
   const handleChoice = useCallback((choiceId: string, picked: number) => {
@@ -67,6 +75,7 @@ export const useStory = (chapters: StoryChapter[]) => {
   return {
     storyState,
     getCurrentChapter,
+    getCurrentNode,
     handleChoice,
     handleNext,
     handleComplete

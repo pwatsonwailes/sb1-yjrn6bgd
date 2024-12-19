@@ -34,7 +34,7 @@ export function App() {
 
   const [gameStarted, setGameStarted] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('board');
-  const { storyState, getCurrentChapter, handleChoice, handleComplete, handleNext } = useStory(storyChapters);
+  const { storyState, getCurrentChapter, getCurrentNode, handleChoice, handleComplete, handleNext } = useStory(storyChapters);
   const { tutorialState, getCurrentStep, completeStep, skipTutorial } = useTutorial();
 
   const selectedEnergy = useMemo(() => {
@@ -66,7 +66,8 @@ export function App() {
   if (storyState.isPlaying) {
     return (
       <StoryView
-        chapter={getCurrentChapter()}
+        storyState={storyState}
+        getCurrentNode={getCurrentNode}
         onChoice={handleChoice}
         onNext={handleNext}
         onComplete={handleComplete}

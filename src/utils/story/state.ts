@@ -6,24 +6,24 @@ export const getNextState = (
   chapters: StoryChapter[],
   action: 'choice' | 'complete' | 'next'
 ): StoryState => {
-  const chapter = chapters[prevState.currentChapter];
+  const chapter = chapters[prevState.currentChapterIndex];
   if (!chapter) return { ...prevState, isPlaying: false };
 
   // Find the next valid node
   const nextValid = findNextValidNode(
     chapter.nodes,
-    prevState.currentNode + 1,
+    prevState.currentNodeIndex + 1,
     prevState.choices
   );
 
   // If no valid next node is found
   if (!nextValid) {
     // Check if there are more chapters
-    if (prevState.currentChapter < chapters.length - 1) {
+    if (prevState.currentChapterIndex < chapters.length - 1) {
       return {
         ...prevState,
-        currentChapter: prevState.currentChapter + 1,
-        currentNode: 0
+        currentChapterIndex: prevState.currentChapterIndex + 1,
+        currentNodeIndex: 0
       };
     }
 
@@ -34,6 +34,6 @@ export const getNextState = (
   // Move to the next valid node
   return {
     ...prevState,
-    currentNode: nextValid.index
+    currentNodeIndex: nextValid.index
   };
 };

@@ -46,8 +46,8 @@ export interface StoryChapter {
 }
 
 export interface StoryState {
-  currentChapter: number;
-  currentNode: number;
+  currentChapterIndex: number;
+  currentNodeIndex: number;
   choices: Record<string, number>;
   isPlaying: boolean;
 }

@@ -26,8 +26,6 @@ export const findNextValidNode = (
 ): { node: StoryNode; index: number } | null => {
   for (let i = startIndex; i < nodes.length; i++) {
     const node = nodes[i]
-    console.log('checking', node, choices)
-
     if (checkNodeRequirements(node, choices)) {
       console.log('checked - valid', node)
       return { node, index: i };
@@ -35,5 +33,6 @@ export const findNextValidNode = (
     else 
       console.log('checked - invalid', node)
   }
+
   return null;
 };

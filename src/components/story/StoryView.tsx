@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { StoryNode, StoryChapter } from '../../types/story';
+import { StoryNode, StoryState } from '../../types/story';
 import { GalleryNode } from './nodes/GalleryNode';
 import { ParagraphNode } from './nodes/ParagraphNode';
 import { ChoiceNode } from './nodes/ChoiceNode';
@@ -10,22 +10,23 @@ import { checkNodeRequirements } from '../../utils/story/nodes';
 import { useAudio } from '../../utils/audio';
 
 interface StoryViewProps {
-  chapter: StoryChapter;
-  onComplete: () => void;
-  onNext: () => void;
+  storyState: StoryState;
+  getCurrentNode?;
+  onComplete?;
+  onNext?;
   onChoice: (choiceId: string, picked: number) => void;
   choices: Record<string, number>;
 }
 
 export const StoryView: React.FC<StoryViewProps> = ({
-  chapter,
+  storyState,
+  getCurrentNode,
   onNext,
   onComplete,
   onChoice,
-  choices = {}
 }) => {
   const [activeCharacters, setActiveCharacters] = useState<Set<string>>(new Set());
-  const currentNode = (typeof chapter.nodeIndex !== 'undefined') ? chapter.nodes[chapter.nodeIndex] : chapter.nodes[0];
+  const [currentNode, setCurrentNode] = useState<StoryNode>();
 
   useAudio(
     currentNode?.media?.music?.track,
@@ -33,8 +34,13 @@ export const StoryView: React.FC<StoryViewProps> = ({
   );
 
   useEffect(() => {
+    setCurrentNode(getCurrentNode())
+  }, [storyState]);
+
+  useEffect(() => {
+    console.log('current node changed to ', currentNode)
     if (!currentNode) return;
-    
+
     if (currentNode.media?.character) {
       setActiveCharacters(prev => {
         const next = new Set(prev);
@@ -42,6 +48,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
         if (currentNode.media?.character?.name) {
           next.add(currentNode.media.character.name);
         }
+
         return next;
       });
     }
@@ -51,30 +58,30 @@ export const StoryView: React.FC<StoryViewProps> = ({
     onChoice(choiceId, optionId);
   };
 
-  const renderNode = (node: StoryNode) => {
-    if (!node || !checkNodeRequirements(node, choices)) {
-      onNext();
+  const renderNode = () => {
+    if (!currentNode || !checkNodeRequirements(currentNode, storyState.choices)) {
+      console.log('current not not renderable - this should never happen')
       return null;
     }
 
-    switch (node.type) {
+    switch (currentNode.type) {
       case 'gallery':
-        return <GalleryNode node={node} onComplete={onNext} />;
+        return <GalleryNode node={currentNode} onComplete={onNext} />;
       case 'paragraph':
-        return <ParagraphNode node={node} onComplete={onNext} />;
+        return <ParagraphNode node={currentNode} onComplete={onNext} />;
       case 'choice':
-        if (!node.id) return null;
+        if (!currentNode.id) return null;
         return (
           <ChoiceNode
-            node={node}
+            node={currentNode}
             onChoice={handleChoice}
           />
         );
       case 'button':
         return (
           <ButtonNode
-            node={node}
-            onComplete={node.mode === 'cards' ? onComplete : onNext}
+            node={currentNode}
+            onComplete={currentNode.mode === 'cards' ? onComplete : onNext}
           />
         );
       default:
@@ -88,7 +95,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
   if (currentNode.type === 'gallery') {
     return (
       <div className="fixed inset-0 bg-black">
-        {renderNode(currentNode)}
+        {renderNode()}
       </div>
     );
   }
@@ -100,7 +107,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
       <div className="w-2/3 relative">
         <AnimatePresence mode="wait">
           <motion.div
-            key={`bg-${chapter.nodeIndex}`}
+            key={`bg-${storyState.currentNodeIndex}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -130,14 +137,14 @@ export const StoryView: React.FC<StoryViewProps> = ({
         <div className="flex-1 overflow-y-auto">
           <AnimatePresence mode="wait">
             <motion.div
-              key={`content-${chapter.nodeIndex}`}
+              key={`content-${storyState.currentNodeIndex}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               className="p-6"
             >
               <div className="max-w-lg mx-auto">
-                {renderNode(currentNode)}
+                {renderNode()}
               </div>
             </motion.div>
           </AnimatePresence>
