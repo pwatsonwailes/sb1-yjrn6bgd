@@ -29,7 +29,9 @@ export function App() {
     selectCard,
     endTurn,
     updateDeck,
-    purchaseCard
+    purchaseCard,
+    handleGoalActivation,
+    handleGoalInvestment
   } = useGameState();
 
   const [gameStarted, setGameStarted] = useState(false);
