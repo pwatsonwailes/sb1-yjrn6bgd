@@ -25,6 +25,18 @@ const applyCardPenalty = (state: GameState, penalty: CardPenalty): [GameState, G
   return [newState, event];
 };
 
+const calculateEnergy = healthPercentage => {
+  const minEnergy = 4;
+  const maxEnergy = 10;
+
+  // Calculate energy using the linear formula
+  const energy = minEnergy + ((maxEnergy - minEnergy) / 100) * healthPercentage;
+
+  // Return the energy, rounded to the nearest whole number
+  return Math.round(energy);
+}
+
+
 export const endTurn = (state: GameState, selectedCards: Set<string>): [GameState, GameEvent[]] => {
   const events: GameEvent[] = [];
   const newDiscardPile = [...state.discardPile];
@@ -52,7 +64,7 @@ export const endTurn = (state: GameState, selectedCards: Set<string>): [GameStat
     hand: [],
     discardPile: newDiscardPile,
     deck: [...state.deck, ...newCards],
-    energyPoints: 5,
+    energyPoints: calculateEnergy(state.condition),
     turn: state.turn + 1,
   };
 
