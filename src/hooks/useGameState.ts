@@ -9,7 +9,7 @@ import { useFactions } from './useFactions';
 import { useEvents } from './useEvents';
 import { useGoals } from './useGoals';
 
-export const useGameState = (saveState: (gameState: GameState, storyState: StoryState) => Promise<void>) => {
+export const useGameState = () => {
   const [gameState, setGameState] = useState<GameState>(getInitialState());
   const [selectedCards, setSelectedCards] = useState<Set<string>>(new Set());
   const [playingCards, setPlayingCards] = useState<Set<string>>(new Set());
@@ -21,8 +21,6 @@ export const useGameState = (saveState: (gameState: GameState, storyState: Story
     updateGoalTimers, 
     activateGoal 
   } = useGoals(factions.map(f => f.id));
-
-  const { saveState } = useSaveState();
 
   const drawCards = useCallback((count: number) => {
     setGameState(state => drawCardsAction(state, count));
@@ -149,8 +147,6 @@ export const useGameState = (saveState: (gameState: GameState, storyState: Story
     setSelectedCards(new Set());
     setPlayingCards(new Set());
     setGameState(finalState);
-
-    await saveState(finalState, storyState);
     
     newEvents.forEach(addEvent);
     
@@ -158,7 +154,7 @@ export const useGameState = (saveState: (gameState: GameState, storyState: Story
       message: `Turn ${finalState.turn} started`,
       type: 'info'
     });
-  }, [playSelectedCards, addEvent, updateGoalTimers, saveState]);
+  }, [playSelectedCards, addEvent, updateGoalTimers]);
 
   return {
     gameState,
