@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+
 import { ResourceBar } from './components/ResourceBar';
 import { EventLog } from './components/EventLog';
 import { FactionsView } from './components/views/FactionsView';
@@ -8,36 +9,28 @@ import { EnergyCounter } from './components/EnergyCounter';
 import { ViewSelector, ViewType } from './components/navigation/ViewSelector';
 import { IntroScreen } from './components/intro/IntroScreen';
 import { StoryView } from './components/story/StoryView';
-import { useGameState } from './hooks/useGameState';
-import { useStory } from './hooks/useStory';
-import { Card as CardType } from './types/cards';
-import { allCards } from './data/cards';
-import { storyChapters } from './data/story/chapters';
-import { useTutorial } from './hooks/useTutorial';
 import { TutorialOverlay } from './components/tutorial/TutorialOverlay';
 import { TutorialHighlight } from './components/tutorial/TutorialHighlight';
 import { GoalsView } from './components/goals/GoalsView';
 
+import { Card as CardType } from './types/cards';
+
+import { allCards } from './data/cards';
+import { storyChapters } from './data/story/chapters';
+
+import { useTutorial } from './hooks/useTutorial';
+import { useGameState } from './hooks/useGameState';
+import { useStory } from './hooks/useStory';
+import { useSaveState } from './hooks/useSaveState';
 
 export function App() {
-  const {
-    gameState,
-    selectedCards,
-    playingCards,
-    events,
-    factions,
-    selectCard,
-    endTurn,
-    updateDeck,
-    purchaseCard,
-    handleGoalActivation,
-    handleGoalInvestment
-  } = useGameState();
-
   const [gameStarted, setGameStarted] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('board');
-  const { storyState, getCurrentNode, handleChoice, handleComplete, handleNext } = useStory(storyChapters);
   const { tutorialState, getCurrentStep, completeStep, skipTutorial } = useTutorial();
+
+  const { saveState } = useSaveState();
+  const { gameState, ...gameActions } = useGameState(saveState);
+  const { storyState, ...storyActions } = useStory(storyChapters, saveState);
 
   const selectedEnergy = useMemo(() => {
     return gameState.hand

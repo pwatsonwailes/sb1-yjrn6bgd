@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CircuitBoard, Zap, Users, CreditCard } from 'lucide-react';
-import { factions } from '../../data/factions';
+import { LoadGameButton } from './LoadGameButton';
 
 interface IntroScreenProps {
   onStartGame: () => void;
@@ -66,25 +66,20 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onStartGame }) => {
           </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
-          className="text-center"
-        >
+        <div className="text-center">
           <button
             onClick={onStartGame}
-            className="
-              px-8 py-3 bg-indigo-600 hover:bg-indigo-700
-              rounded-lg text-lg font-semibold
-              transition-colors duration-200
-              shadow-lg hover:shadow-xl
-              transform hover:-translate-y-1
-            "
+            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-lg font-semibold transition-colors mr-4"
           >
-            Start Game
+            New Game
           </button>
-        </motion.div>
+          <LoadGameButton onLoad={(saveData) => {
+            // Initialize game with saved data
+            setGameState(saveData.gameState);
+            setStoryState(saveData.storyState);
+            setGameStarted(true);
+          }} />
+        </div>
       </div>
     </div>
   );

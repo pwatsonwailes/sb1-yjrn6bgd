@@ -9,7 +9,7 @@ import { useFactions } from './useFactions';
 import { useEvents } from './useEvents';
 import { useGoals } from './useGoals';
 
-export const useGameState = () => {
+export const useGameState = (saveState: (gameState: GameState, storyState: StoryState) => Promise<void>) => {
   const [gameState, setGameState] = useState<GameState>(getInitialState());
   const [selectedCards, setSelectedCards] = useState<Set<string>>(new Set());
   const [playingCards, setPlayingCards] = useState<Set<string>>(new Set());
@@ -21,6 +21,8 @@ export const useGameState = () => {
     updateGoalTimers, 
     activateGoal 
   } = useGoals(factions.map(f => f.id));
+
+  const { saveState } = useSaveState();
 
   const drawCards = useCallback((count: number) => {
     setGameState(state => drawCardsAction(state, count));
@@ -147,6 +149,8 @@ export const useGameState = () => {
     setSelectedCards(new Set());
     setPlayingCards(new Set());
     setGameState(finalState);
+
+    await saveState(finalState, storyState);
     
     newEvents.forEach(addEvent);
     
@@ -154,7 +158,7 @@ export const useGameState = () => {
       message: `Turn ${finalState.turn} started`,
       type: 'info'
     });
-  }, [playSelectedCards, addEvent, updateGoalTimers]);
+  }, [playSelectedCards, addEvent, updateGoalTimers, saveState]);
 
   return {
     gameState,

@@ -3,7 +3,10 @@ import { StoryState, StoryChapter } from '../types/story';
 import { findNextValidNode } from '../utils/story/nodes';
 import { getNextState } from '../utils/story/state';
 
-export const useStory = (chapters: StoryChapter[]) => {
+export const useStory = (
+  chapters: StoryChapter[],
+  saveState: (gameState: GameState, storyState: StoryState) => Promise<void>
+) => {
   const [storyState, setStoryState] = useState<StoryState>({
     currentChapterIndex: 0,
     currentNodeIndex: 0,
@@ -54,7 +57,6 @@ export const useStory = (chapters: StoryChapter[]) => {
 
   const handleChoice = useCallback((choiceId: string, picked: number) => {
     setStoryState(prev => {
-      // First update choices
       const newState = {
         ...prev,
         choices: {
@@ -62,8 +64,7 @@ export const useStory = (chapters: StoryChapter[]) => {
           [choiceId]: picked
         }
       };
-
-      // Then calculate the next state based on the new choices
+      
       return getNextState(newState, chapters, 'choice');
     });
   }, [chapters]);
@@ -72,12 +73,16 @@ export const useStory = (chapters: StoryChapter[]) => {
     setStoryState(prev => getNextState(prev, chapters, 'complete'));
   }, [chapters]);
 
+  useEffect(() => {
+    saveState(gameState, storyState);
+  }, [storyState, saveState]);
+
   return {
     storyState,
     getCurrentChapter,
     getCurrentNode,
     handleChoice,
     handleNext,
-    handleComplete
+    handleComplete,
   };
 };
